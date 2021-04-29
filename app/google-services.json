@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "178665620461",
+    "firebase_url": "https://budget-control-c490b-default-rtdb.firebaseio.com",
+    "project_id": "budget-control-c490b",
+    "storage_bucket": "budget-control-c490b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:178665620461:android:9e50c76069f0cfdd7e5de4",
+        "android_client_info": {
+          "package_name": "dizel.budget_control"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "178665620461-ii0j0fh11puboicsaaj4fbkhnvq59dc5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdSpT_VI3DT2MqNF5SDpA0x9kM6l2mDt4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "178665620461-ii0j0fh11puboicsaaj4fbkhnvq59dc5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
