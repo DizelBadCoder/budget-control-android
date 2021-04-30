@@ -1,5 +1,8 @@
 package dizel.budget_control.auth
 
-fun isValidPassword(password: String) = password.isNotEmpty()
+import  android.util.Patterns.EMAIL_ADDRESS
 
-fun isValidEmail(email: String) = email.isNotEmpty()
+fun isValidPassword(password: String) = password.length > 5
+
+fun isValidEmail(email: String) =
+        email.isNotEmpty() && EMAIL_ADDRESS.matcher(email).matches()
