@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".auth.view.AuthActivity"/>
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".budget_list.view.MainActivity"/>
     </application>
 
 </manifest>

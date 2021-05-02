@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/vNameBudget"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/vMoneyBudget"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="@string/money"
+        app:layout_constraintEnd_toEndOf="@id/vNameBudget"
+        app:layout_constraintStart_toStartOf="@id/vNameBudget"
+        app:layout_constraintTop_toBottomOf="@id/vNameBudget" />
+
+    <Button
+        android:id="@+id/vSubmitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/submit"
+        app:layout_constraintEnd_toEndOf="@+id/vMoneyBudget"
+        app:layout_constraintTop_toBottomOf="@+id/vMoneyBudget" />
+
+    <Spinner
+        android:id="@+id/vSpinnerCurrency"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/vSubmitButton"
+        app:layout_constraintEnd_toStartOf="@+id/vSubmitButton"
+        app:layout_constraintTop_toTopOf="@+id/vSubmitButton" />
+</androidx.constraintlayout.widget.ConstraintLayout>

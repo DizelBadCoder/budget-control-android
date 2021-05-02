@@ -7,7 +7,7 @@ import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
-import dizel.budget_control.MainActivity
+import dizel.budget_control.budget_list.view.MainActivity
 import dizel.budget_control.R
 import dizel.budget_control.auth.isValidEmail
 import dizel.budget_control.auth.isValidPassword

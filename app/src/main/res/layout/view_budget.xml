@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardUseCompatPadding="false">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/vImageBudget"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/pika"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/vNameBudget"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/vImageBudget"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Budget #1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/vTotalSumBudget"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/vNameBudget"
+            app:layout_constraintStart_toStartOf="@+id/vNameBudget"
+            app:layout_constraintTop_toBottomOf="@+id/vNameBudget"
+            tools:text="Total: 10.000$" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/vRemainderBudget"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/vTotalSumBudget"
+            app:layout_constraintStart_toStartOf="@+id/vTotalSumBudget"
+            app:layout_constraintTop_toBottomOf="@+id/vTotalSumBudget"
+            tools:text="Remainder: 500$" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
