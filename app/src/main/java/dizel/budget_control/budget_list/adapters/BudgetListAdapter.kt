@@ -16,7 +16,8 @@ class BudgetListAdapter: RecyclerView.Adapter<BudgetListAdapter.BudgetViewHolder
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BudgetViewHolder {
         val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.view_budget, parent, false)
-        return BudgetViewHolder(view)
+        val binding = ViewBudgetBinding.bind(view)
+        return BudgetViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: BudgetViewHolder, position: Int) {
@@ -32,19 +33,17 @@ class BudgetListAdapter: RecyclerView.Adapter<BudgetListAdapter.BudgetViewHolder
     }
 
     inner class BudgetViewHolder(
-            private val budgetView: View
-    ) : RecyclerView.ViewHolder(budgetView) {
+            private val binding: ViewBudgetBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
-        fun bind(budget: Budget) {
-            ViewBudgetBinding.bind(budgetView).apply {
-                val reminder = budget.sum - budget.category.map { it.money }.sum()
-                val symbol = " " + budget.currency.symbol
+        fun bind(budget: Budget) = with (binding) {
+            val reminder = budget.sum - budget.category.map { it.money }.sum()
+            val symbol = " " + budget.currency.symbol
 
-                vNameBudget.text = budget.title
-                vTotalSumBudget.text = budget.sum.toString() + symbol
-                vRemainderBudget.text = reminder.toString() + symbol
-            }
+            vNameBudget.text = budget.title
+            vTotalSumBudget.text = budget.sum.toString() + symbol
+            vRemainderBudget.text = reminder.toString() + symbol
         }
     }
 }

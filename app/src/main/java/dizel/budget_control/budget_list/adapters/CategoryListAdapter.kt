@@ -17,7 +17,8 @@ class CategoryListAdapter: RecyclerView.Adapter<CategoryListAdapter.CategoryView
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
         val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_category, parent, false)
-        return CategoryViewHolder(view)
+        val binding = ItemCategoryBinding.bind(view)
+        return CategoryViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
@@ -27,15 +28,13 @@ class CategoryListAdapter: RecyclerView.Adapter<CategoryListAdapter.CategoryView
     override fun getItemCount() = categoryList.size
 
     inner class CategoryViewHolder(
-            private val view: View
-    ): RecyclerView.ViewHolder(view) {
+            private val binding: ItemCategoryBinding
+    ): RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
-        fun bind(category: Category) {
-            ItemCategoryBinding.bind(view).apply {
-                vCategoryName.text = category.name
-                vCategoryMoney.text = "${category.money} ${category.currency.symbol}"
-                vCategoryColor.setBackgroundColor(Color.parseColor(category.color))
-            }
+        fun bind(category: Category) = with (binding) {
+            vCategoryName.text = category.name
+            vCategoryMoney.text = "${category.money} ${category.currency.symbol}"
+            vCategoryColor.setBackgroundColor(Color.parseColor(category.color))
         }
     }
 }
