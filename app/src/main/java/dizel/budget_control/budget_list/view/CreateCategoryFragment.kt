@@ -16,5 +16,11 @@ class CreateCategoryFragment : Fragment(R.layout.fragment_create_category) {
         _binding = FragmentCreateCategoryBinding.bind(view).apply {
 
         }
+
+        setUpToolbar()
+    }
+
+    private fun setUpToolbar() {
+        activity?.actionBar?.setTitle(R.string.create_category)
     }
 }

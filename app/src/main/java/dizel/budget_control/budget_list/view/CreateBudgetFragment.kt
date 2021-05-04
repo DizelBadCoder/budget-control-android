@@ -25,6 +25,8 @@ class CreateBudgetFragment: Fragment(R.layout.fragment_create_budget) {
                             Currency.values().map { "${it.symbol} ${it.name}" }
                     )
         }
+
+        setUpToolbar()
     }
 
     private fun createBudget() {
@@ -37,5 +39,9 @@ class CreateBudgetFragment: Fragment(R.layout.fragment_create_budget) {
 
         // TODO add new budget to firebase
         // TODO go to new budget details screen
+    }
+
+    private fun setUpToolbar() {
+        activity?.actionBar?.setTitle(R.string.create_budget)
     }
 }

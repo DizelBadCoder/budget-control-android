@@ -13,6 +13,10 @@
     <string name="password">Password</string>
     <string name="confirm_password">Confirm password</string>
 
+    <string name="create_budget">Create budget</string>
+    <string name="create_category">Create category</string>
+    <string name="list_budgets">List budgets</string>
+
     <!-- Errors auth -->
     <string name="error_auth">Authentication failed</string>
     <string name="error_auth_email">E-mail is invalidate</string>

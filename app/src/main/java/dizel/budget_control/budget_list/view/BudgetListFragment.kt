@@ -22,6 +22,11 @@ class BudgetListFragment: Fragment(R.layout.fragment_list_budget) {
         budgetAdapter.updateList(budgets)
         binding.vRecyclerView.adapter = budgetAdapter
 
+        setUpToolbar()
+    }
+
+    private fun setUpToolbar() {
+        activity?.actionBar?.setTitle(R.string.list_budgets)
     }
 
     private fun goToCreateBudgetFragment() {
