@@ -1,4 +1,4 @@
-package dizel.budget_control.budget_list.view
+package dizel.budget_control.budget.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import dizel.budget_control.R
 import dizel.budget_control.auth.view.AuthActivity
+import dizel.budget_control.budget.budget_list.BudgetListFragment
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 

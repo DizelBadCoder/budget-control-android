@@ -2,7 +2,7 @@ package dizel.budget_control
 
 import android.app.Application
 import dizel.budget_control.auth.authModule
-import dizel.budget_control.budget_list.budgetsModule
+import dizel.budget_control.budget.budgetsModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import timber.log.Timber

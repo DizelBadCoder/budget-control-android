@@ -1,13 +1,12 @@
-package dizel.budget_control.budget_list.view
+package dizel.budget_control.budget.create_budget
 
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.ListAdapter
 import androidx.fragment.app.Fragment
 import dizel.budget_control.R
-import dizel.budget_control.budget_list.Budget
-import dizel.budget_control.budget_list.Currency
+import dizel.budget_control.budget.domain.Budget
+import dizel.budget_control.budget.domain.Currency
 import dizel.budget_control.databinding.FragmentCreateBudgetBinding
 
 class CreateBudgetFragment: Fragment(R.layout.fragment_create_budget) {
@@ -17,7 +16,7 @@ class CreateBudgetFragment: Fragment(R.layout.fragment_create_budget) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentCreateBudgetBinding.bind(view).apply {
-            vSubmitButton.setOnClickListener { createBudget() }
+            vSubmitButton.setOnClickListener { createNewBudgetAndGoIn() }
 
             vSpinnerCurrency.adapter = ArrayAdapter(
                             view.context,
@@ -29,17 +28,17 @@ class CreateBudgetFragment: Fragment(R.layout.fragment_create_budget) {
         setUpToolbar()
     }
 
-    private fun createBudget() {
-        val budget = Budget(
-                title = binding.vNameBudget.text.toString(),
-                sum = binding.vMoneyBudget.text.toString().toDouble(),
-                currency = Currency.valueOf(binding.vSpinnerCurrency.selectedItem as String),
-                category = emptyList()
-        )
+    private fun createNewBudgetAndGoIn() {
+        val budget = getBudget()
 
-        // TODO add new budget to firebase
-        // TODO go to new budget details screen
     }
+
+    private fun getBudget() = Budget(
+        title = binding.vNameBudget.text.toString(),
+        sum = binding.vMoneyBudget.text.toString().toDouble(),
+        currency = Currency.valueOf(binding.vSpinnerCurrency.selectedItem as String),
+        category = emptyList()
+    )
 
     private fun setUpToolbar() {
         activity?.actionBar?.setTitle(R.string.create_budget)

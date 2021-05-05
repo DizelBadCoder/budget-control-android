@@ -5,6 +5,6 @@
     android:id="@+id/vFragmentContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".budget_list.view.MainActivity">
+    tools:context=".budget.view.MainActivity">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

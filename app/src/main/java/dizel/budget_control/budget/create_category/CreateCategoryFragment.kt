@@ -1,4 +1,4 @@
-package dizel.budget_control.budget_list.view
+package dizel.budget_control.budget.create_category
 
 import android.os.Bundle
 import android.view.View

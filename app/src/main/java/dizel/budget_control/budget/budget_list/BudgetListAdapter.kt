@@ -1,12 +1,11 @@
-package dizel.budget_control.budget_list.adapters
+package dizel.budget_control.budget.budget_list
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import dizel.budget_control.R
-import dizel.budget_control.budget_list.Budget
+import dizel.budget_control.budget.domain.Budget
 import dizel.budget_control.databinding.ViewBudgetBinding
 
 class BudgetListAdapter: RecyclerView.Adapter<BudgetListAdapter.BudgetViewHolder>() {
