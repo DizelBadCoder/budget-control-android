@@ -9,9 +9,9 @@ import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import dizel.budget_control.budget.view.MainActivity
 import dizel.budget_control.R
-import dizel.budget_control.auth.isValidEmail
-import dizel.budget_control.auth.isValidPassword
 import dizel.budget_control.databinding.FragmentSingInBinding
+import dizel.budget_control.utils.isValidEmail
+import dizel.budget_control.utils.isValidPassword
 
 class SignInFragment: Fragment(R.layout.fragment_sing_in) {
     private var _binding: FragmentSingInBinding? = null

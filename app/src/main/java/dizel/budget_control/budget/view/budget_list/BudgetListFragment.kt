@@ -1,10 +1,10 @@
-package dizel.budget_control.budget.budget_list
+package dizel.budget_control.budget.view.budget_list
 
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import dizel.budget_control.R
-import dizel.budget_control.budget.create_budget.CreateBudgetFragment
+import dizel.budget_control.budget.view.create_budget.CreateBudgetFragment
 import dizel.budget_control.utils.ResultRequest
 import dizel.budget_control.databinding.FragmentListBudgetBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel

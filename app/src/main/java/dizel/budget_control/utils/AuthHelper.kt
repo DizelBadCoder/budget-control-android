@@ -1,4 +1,4 @@
-package dizel.budget_control.auth
+package dizel.budget_control.utils
 
 import  android.util.Patterns.EMAIL_ADDRESS
 
