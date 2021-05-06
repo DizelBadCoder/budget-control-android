@@ -20,8 +20,8 @@ class BudgetListViewModel(
     }
 
     fun loadBudgetList() {
+        _budgetList.value = ResultRequest.Loading
         viewModelScope.launch {
-            _budgetList.value = ResultRequest.Loading
             _budgetList.value = budgetRepository.getAllBudgets()
         }
     }

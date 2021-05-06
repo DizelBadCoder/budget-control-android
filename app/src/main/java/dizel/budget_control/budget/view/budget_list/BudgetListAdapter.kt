@@ -13,8 +13,6 @@ import dizel.budget_control.databinding.ViewBudgetBinding
 class BudgetListAdapter:
     ListAdapter<Budget, BudgetListAdapter.BudgetViewHolder>(OrderDiffUtil()) {
 
-    private val budgetList = ArrayList<Budget>()
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BudgetViewHolder {
         val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.view_budget, parent, false)
@@ -23,10 +21,10 @@ class BudgetListAdapter:
     }
 
     override fun onBindViewHolder(holder: BudgetViewHolder, position: Int) {
-        holder.bind(budgetList[position])
+        holder.bind(currentList[position])
     }
 
-    override fun getItemCount() = budgetList.size
+    override fun getItemCount() = currentList.size
 
     inner class BudgetViewHolder(
             private val binding: ViewBudgetBinding

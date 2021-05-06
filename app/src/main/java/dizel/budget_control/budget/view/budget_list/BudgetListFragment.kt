@@ -3,6 +3,7 @@ package dizel.budget_control.budget.view.budget_list
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import dizel.budget_control.R
 import dizel.budget_control.budget.view.create_budget.CreateBudgetFragment
@@ -35,16 +36,21 @@ class BudgetListFragment: Fragment(R.layout.fragment_list_budget) {
             when (result) {
                 is ResultRequest.Success -> {
                     budgetListAdapter?.submitList(result.data)
+                    hideLoadingState()
                 }
                 is ResultRequest.Error -> {
                     Timber.e(result.exception)
                     Toast.makeText(context, result.exception.message, Toast.LENGTH_SHORT).show()
+                    hideLoadingState()
                 }
-                is ResultRequest.Loading -> {
-                    // TODO show loading view
-                }
+                is ResultRequest.Loading -> { }
             }
         }
+    }
+
+    private fun hideLoadingState() {
+        binding.vSwipeRefresher.isRefreshing = false
+        binding.vLoadingProgressBar.isVisible = false
     }
 
     private fun setUpAdapter() {
