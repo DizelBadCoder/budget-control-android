@@ -19,11 +19,11 @@ class BudgetDetailsFragment: Fragment() {
     }
 
     companion object {
-        fun newInstance(budgetId: Int): BudgetDetailsFragment {
+        fun newInstance(budgetId: String): BudgetDetailsFragment {
             val fragment = BudgetDetailsFragment()
             val bundle = Bundle()
 
-            bundle.putInt(BUDGET_KEY, budgetId)
+            bundle.putString(BUDGET_KEY, budgetId)
             fragment.arguments = bundle
             return fragment
         }

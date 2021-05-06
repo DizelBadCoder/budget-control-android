@@ -62,12 +62,13 @@ class BudgetRepositoryImpl(
         }
     }
 
-    override suspend fun createBudget(budget: Budget): ResultRequest<Unit> {
+    override suspend fun createBudget(budget: Budget): ResultRequest<String> {
         return try {
             val hashMap = BudgetToHashMapMapper.map(budget)
-            getReference().updateChildren(hashMap)
+            val key = hashMap.keys.first()
 
-            ResultRequest.Success(Unit)
+            getReference().updateChildren(hashMap)
+            ResultRequest.Success(key)
         } catch (ex: Exception) {
             ResultRequest.Error(ex)
         }

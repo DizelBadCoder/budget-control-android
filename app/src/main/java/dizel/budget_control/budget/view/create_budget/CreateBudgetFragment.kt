@@ -3,42 +3,83 @@ package dizel.budget_control.budget.view.create_budget
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import dizel.budget_control.R
 import dizel.budget_control.budget.domain.Budget
 import dizel.budget_control.budget.domain.Currency
+import dizel.budget_control.budget.view.budget_details.BudgetDetailsFragment
 import dizel.budget_control.databinding.FragmentCreateBudgetBinding
+import dizel.budget_control.utils.ResultRequest
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CreateBudgetFragment: Fragment(R.layout.fragment_create_budget) {
     private var _binding: FragmentCreateBudgetBinding? = null
     private val binding get() = _binding!!
 
+    private val viewModel by viewModel<CreateBudgetViewModel>()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentCreateBudgetBinding.bind(view).apply {
-            vSubmitButton.setOnClickListener { createNewBudgetAndGoIn() }
+            vSubmitButton.setOnClickListener { createBudget() }
 
-            vSpinnerCurrency.adapter = ArrayAdapter(
-                            view.context,
-                            android.R.layout.simple_spinner_item,
-                            Currency.values().map { "${it.symbol} ${it.name}" }
-                    )
+            val adapter = ArrayAdapter(
+                view.context,
+                android.R.layout.simple_spinner_item,
+                Currency.values().map { "${it.name} - ${it.symbol}" }
+            )
+            vSpinnerCurrency.adapter = adapter
         }
 
+        subscribeUI()
         setUpToolbar()
     }
 
-    private fun createNewBudgetAndGoIn() {
-        val budget = getBudget()
-
+    private fun subscribeUI() {
+        viewModel.createBudgetFlow.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is ResultRequest.Success -> {
+                    val id = result.data
+                    goToBudgetDetailsFragment(id)
+                }
+                is ResultRequest.Error -> {
+                    showError(result.exception.message ?: getString(R.string.unknown_error))
+                }
+                is ResultRequest.Loading -> { }
+            }
+        }
     }
 
-    private fun getBudget() = Budget(
-        title = binding.vNameBudget.text.toString(),
-        sum = binding.vMoneyBudget.text.toString().toLong(),
-        currency = Currency.valueOf(binding.vSpinnerCurrency.selectedItem as String),
-        categoryList = emptyList()
-    )
+    private fun goToBudgetDetailsFragment(id: String) {
+        val fragment = BudgetDetailsFragment.newInstance(id)
+
+        parentFragmentManager
+            .beginTransaction()
+            .replace(R.id.vFragmentContainer, fragment)
+            .commit()
+    }
+
+    private fun createBudget() {
+        val title = binding.vNameBudget.text.toString().ifEmpty { null }
+        val sum = binding.vMoneyBudget.text.toString().toLongOrNull()
+
+        if (title == null || sum == null) {
+            showError(getString(R.string.invalidate_fields))
+            return
+        }
+
+        viewModel.createBudget(Budget(
+            title = title,
+            sum = sum,
+            currency = Currency.values()[binding.vSpinnerCurrency.selectedItemPosition],
+            categoryList = emptyList()
+        ))
+    }
+
+    private fun showError(mes: String) {
+        Toast.makeText(context, mes, Toast.LENGTH_LONG).show()
+    }
 
     private fun setUpToolbar() {
         activity?.actionBar?.setTitle(R.string.create_budget)

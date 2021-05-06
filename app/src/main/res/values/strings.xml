@@ -20,6 +20,9 @@
     <string name="total">Total: %s</string>
     <string name="remainder">Remainder: %s</string>
 
+    <string name="invalidate_fields">Fields is invalidate.</string>
+    <string name="unknown_error">Unknown error.</string>
+
     <!-- Errors auth -->
     <string name="error_auth">Authentication failed</string>
     <string name="error_auth_email">E-mail is invalidate</string>

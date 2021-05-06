@@ -9,5 +9,5 @@ interface BudgetRepository {
 
     suspend fun getBudgetById(id: String): ResultRequest<Budget>
 
-    suspend fun createBudget(budget: Budget): ResultRequest<Unit>
+    suspend fun createBudget(budget: Budget): ResultRequest<String>
 }

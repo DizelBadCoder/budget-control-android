@@ -13,13 +13,13 @@ class CreateBudgetViewModel(
     private val budgetRepository: BudgetRepository
 ): ViewModel() {
 
-    private val _loadingFlow = MutableLiveData<ResultRequest<Unit>>()
-    val loadingFlow = _loadingFlow.asLiveData()
+    private val _createBudgetFlow = MutableLiveData<ResultRequest<String>>()
+    val createBudgetFlow = _createBudgetFlow.asLiveData()
 
     fun createBudget(budget: Budget) {
         viewModelScope.launch {
-            _loadingFlow.value = ResultRequest.Loading
-            _loadingFlow.value = budgetRepository.createBudget(budget)
+            _createBudgetFlow.value = ResultRequest.Loading
+            _createBudgetFlow.value = budgetRepository.createBudget(budget)
         }
     }
 }
