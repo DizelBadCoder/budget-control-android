@@ -1,4 +1,4 @@
-package dizel.budget_control.budget.budget_list
+package dizel.budget_control.budget.view.budget_list
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

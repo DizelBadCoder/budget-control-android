@@ -1,4 +1,4 @@
-package dizel.budget_control.budget.create_budget
+package dizel.budget_control.budget.view.create_budget
 
 import android.os.Bundle
 import android.view.View

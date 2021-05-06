@@ -1,9 +1,10 @@
-package dizel.budget_control.budget.create_category
+package dizel.budget_control.budget.view.budget_details
 
 import androidx.lifecycle.ViewModel
 import dizel.budget_control.budget.repository.BudgetRepository
 
-class CreateCategoryViewModel(
+class BudgetDetailsViewModel(
     private val budgetRepository: BudgetRepository
 ): ViewModel() {
+
 }
