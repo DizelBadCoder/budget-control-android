@@ -1,8 +1,10 @@
-package dizel.budget_control.budget.domain
+package dizel.budget_control.budget.mappers
 
+import dizel.budget_control.budget.domain.Budget
+import dizel.budget_control.budget.domain.Category
 import dizel.budget_control.utils.generateKey
 
-object BudgetToHashMap {
+object BudgetToHashMapper {
     fun map(budget: Budget): HashMap<String, Any> {
         val key = generateKey()
         val map = hashMapOf<String, Any>(

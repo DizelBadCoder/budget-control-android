@@ -1,5 +1,6 @@
-package dizel.budget_control.budget.domain
+package dizel.budget_control.budget.mappers
 
+import dizel.budget_control.budget.domain.*
 import dizel.budget_control.utils.MissingDataException
 
 object BudgetApiToBudgetMapper {

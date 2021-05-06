@@ -5,8 +5,8 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import dizel.budget_control.budget.domain.Budget
 import dizel.budget_control.budget.domain.BudgetApi
-import dizel.budget_control.budget.domain.BudgetApiToBudgetMapper
-import dizel.budget_control.budget.domain.BudgetToHashMap
+import dizel.budget_control.budget.mappers.BudgetApiToBudgetMapper
+import dizel.budget_control.budget.mappers.BudgetToHashMapper
 import dizel.budget_control.utils.ResultRequest
 
 class BudgetRepositoryImpl(
@@ -50,7 +50,7 @@ class BudgetRepositoryImpl(
 
     override suspend fun createBudget(budget: Budget): ResultRequest<Unit> {
         return try {
-            val hashMap = BudgetToHashMap.map(budget)
+            val hashMap = BudgetToHashMapper.map(budget)
             getReference().updateChildren(hashMap)
 
             ResultRequest.Success(Unit)
