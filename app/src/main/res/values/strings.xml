@@ -17,6 +17,9 @@
     <string name="create_category">Create category</string>
     <string name="list_budgets">List budgets</string>
 
+    <string name="total">Total: %s</string>
+    <string name="remainder">Remainder: %s</string>
+
     <!-- Errors auth -->
     <string name="error_auth">Authentication failed</string>
     <string name="error_auth_email">E-mail is invalidate</string>

@@ -2,12 +2,14 @@ package dizel.budget_control.budget.view.budget_list
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import dizel.budget_control.R
 import dizel.budget_control.budget.view.create_budget.CreateBudgetFragment
 import dizel.budget_control.utils.ResultRequest
 import dizel.budget_control.databinding.FragmentListBudgetBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 class BudgetListFragment: Fragment(R.layout.fragment_list_budget) {
     private var _binding: FragmentListBudgetBinding? = null
@@ -34,7 +36,8 @@ class BudgetListFragment: Fragment(R.layout.fragment_list_budget) {
                     budgetListAdapter?.updateList(result.data)
                 }
                 is ResultRequest.Error -> {
-                    // TODO show error
+                    Timber.e(result.exception)
+                    Toast.makeText(context, result.exception.message, Toast.LENGTH_SHORT).show()
                 }
                 is ResultRequest.Loading -> {
                     // TODO show loading view

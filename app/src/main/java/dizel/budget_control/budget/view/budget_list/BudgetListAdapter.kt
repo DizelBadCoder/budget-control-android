@@ -37,12 +37,15 @@ class BudgetListAdapter: RecyclerView.Adapter<BudgetListAdapter.BudgetViewHolder
 
         @SuppressLint("SetTextI18n")
         fun bind(budget: Budget) = with (binding) {
-            val reminder = budget.sum - budget.category.map { it.money }.sum()
+            val remainder = budget.sum - budget.categoryList.map { it.money }.sum()
             val symbol = " " + budget.currency.symbol
+            val context = this@BudgetViewHolder.itemView.context
 
             vNameBudget.text = budget.title
-            vTotalSumBudget.text = budget.sum.toString() + symbol
-            vRemainderBudget.text = reminder.toString() + symbol
+            vTotalSumBudget.text =
+                context.getString(R.string.total, budget.sum.toString() + symbol)
+            vRemainderBudget.text =
+                context.getString(R.string.remainder, remainder.toString() + symbol)
         }
     }
 }

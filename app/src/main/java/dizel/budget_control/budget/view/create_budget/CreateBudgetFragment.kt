@@ -35,9 +35,9 @@ class CreateBudgetFragment: Fragment(R.layout.fragment_create_budget) {
 
     private fun getBudget() = Budget(
         title = binding.vNameBudget.text.toString(),
-        sum = binding.vMoneyBudget.text.toString().toDouble(),
+        sum = binding.vMoneyBudget.text.toString().toLong(),
         currency = Currency.valueOf(binding.vSpinnerCurrency.selectedItem as String),
-        category = emptyList()
+        categoryList = emptyList()
     )
 
     private fun setUpToolbar() {

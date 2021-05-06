@@ -1,8 +1,8 @@
 package dizel.budget_control.budget.domain
 
 data class Budget(
-    val sum: Double,
-    val category: List<Category>,
+    val sum: Long,
+    val categoryList: List<Category>,
     val currency: Currency,
     val title: String
 )
@@ -10,7 +10,7 @@ data class Budget(
 data class Category(
     val id: String,
     val name: String,
-    val money: Double,
+    val money: Long,
     val currency: Currency,
     val color: String
 )

@@ -1,16 +1,40 @@
 package dizel.budget_control.budget.domain
 
+import com.google.firebase.database.PropertyName
+
 data class BudgetApi(
-    val sum: String? = null,
-    val category: List<CategoryApi>? = null,
-    val currency: String? = null,
-    val title: String? = null
+    @get:PropertyName("budgetSum")
+    @set:PropertyName("budgetSum")
+    var sum: Long? = null,
+
+    @get:PropertyName("currency")
+    @set:PropertyName("currency")
+    var currency: String? = null,
+
+    @get:PropertyName("title")
+    @set:PropertyName("title")
+    var title: String? = null
 )
 
 data class CategoryApi(
-    val id: String? = null,
-    val name: String? = null,
-    val money: String? = null,
-    val currency: String? = null,
-    val color: String? = null
+    @get:PropertyName("categoryId")
+    @set:PropertyName("categoryId")
+    var id: String? = null,
+
+    @get:PropertyName("categoryName")
+    @set:PropertyName("categoryName")
+    var name: String? = null,
+
+    @get:PropertyName("categoryMoney")
+    @set:PropertyName("categoryMoney")
+    var money: Long? = null,
+
+    @get:PropertyName("categoryCurrency")
+    @set:PropertyName("categoryCurrency")
+    var currency: String? = null,
+
+    @get:PropertyName("categoryColor")
+    @set:PropertyName("categoryColor")
+    var color: String? = null
+
 )
