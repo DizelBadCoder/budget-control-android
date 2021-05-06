@@ -22,6 +22,7 @@ class BudgetListFragment: Fragment(R.layout.fragment_list_budget) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentListBudgetBinding.bind(view).apply {
             vFloatingButton.setOnClickListener { goToCreateBudgetFragment() }
+            vSwipeRefresher.setOnRefreshListener { viewModel.loadBudgetList() }
         }
 
         setUpAdapter()
