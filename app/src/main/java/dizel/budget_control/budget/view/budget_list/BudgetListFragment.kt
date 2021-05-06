@@ -33,7 +33,7 @@ class BudgetListFragment: Fragment(R.layout.fragment_list_budget) {
         viewModel.budgetList.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is ResultRequest.Success -> {
-                    budgetListAdapter?.updateList(result.data)
+                    budgetListAdapter?.submitList(result.data)
                 }
                 is ResultRequest.Error -> {
                     Timber.e(result.exception)

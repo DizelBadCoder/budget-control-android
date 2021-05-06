@@ -3,12 +3,15 @@ package dizel.budget_control.budget.view.budget_list
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import dizel.budget_control.R
 import dizel.budget_control.budget.domain.Budget
 import dizel.budget_control.databinding.ViewBudgetBinding
 
-class BudgetListAdapter: RecyclerView.Adapter<BudgetListAdapter.BudgetViewHolder>() {
+class BudgetListAdapter:
+    ListAdapter<Budget, BudgetListAdapter.BudgetViewHolder>(OrderDiffUtil()) {
 
     private val budgetList = ArrayList<Budget>()
 
@@ -24,12 +27,6 @@ class BudgetListAdapter: RecyclerView.Adapter<BudgetListAdapter.BudgetViewHolder
     }
 
     override fun getItemCount() = budgetList.size
-
-    fun updateList(list: List<Budget>) {
-        budgetList.clear()
-        budgetList.addAll(list)
-        notifyDataSetChanged()
-    }
 
     inner class BudgetViewHolder(
             private val binding: ViewBudgetBinding
@@ -47,5 +44,15 @@ class BudgetListAdapter: RecyclerView.Adapter<BudgetListAdapter.BudgetViewHolder
             vRemainderBudget.text =
                 context.getString(R.string.remainder, remainder.toString() + symbol)
         }
+    }
+}
+
+private class OrderDiffUtil : DiffUtil.ItemCallback<Budget>() {
+    override fun areItemsTheSame(oldItem: Budget, newItem: Budget): Boolean {
+        return oldItem.title == newItem.title
+    }
+
+    override fun areContentsTheSame(oldItem: Budget, newItem: Budget): Boolean {
+        return oldItem == newItem
     }
 }
