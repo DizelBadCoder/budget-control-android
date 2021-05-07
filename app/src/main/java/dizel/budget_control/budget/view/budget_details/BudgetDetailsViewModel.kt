@@ -17,7 +17,7 @@ class BudgetDetailsViewModel(
     private val _budget = MutableLiveData<ResultRequest<Budget>>()
     val budget = _budget.asLiveData()
 
-    private fun loadBudgetById(budgetId: BudgetId) {
+    fun loadBudgetById(budgetId: BudgetId) {
         viewModelScope.launch {
             _budget.value = ResultRequest.Loading
             _budget.value = budgetRepository.getBudgetById(budgetId)

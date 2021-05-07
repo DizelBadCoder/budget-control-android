@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import dizel.budget_control.R
 import dizel.budget_control.budget.domain.Budget
 import dizel.budget_control.databinding.FragmentBudgetDetailsBinding
+import dizel.budget_control.utils.MissingDataException
 import dizel.budget_control.utils.ResultRequest
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
@@ -23,6 +24,7 @@ class BudgetDetailsFragment: Fragment(R.layout.fragment_budget_details) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentBudgetDetailsBinding.bind(view)
 
+        loadBudgetFromArguments()
         subscribeUi()
         setUpAdapters()
     }
@@ -42,6 +44,14 @@ class BudgetDetailsFragment: Fragment(R.layout.fragment_budget_details) {
         }
     }
 
+    private fun loadBudgetFromArguments() {
+        arguments?.getString(BUDGET_KEY_DETAILS).let {
+            viewModel.loadBudgetById(
+                budgetId = it ?: throw MissingDataException()
+            )
+        }
+    }
+
     private fun setUpAdapters() {
         categoryAdapter = CategoryListAdapter()
         binding.vCategoryList.adapter = categoryAdapter
@@ -55,7 +65,6 @@ class BudgetDetailsFragment: Fragment(R.layout.fragment_budget_details) {
 
         categoryAdapter?.submitList(budget.categoryList)
     }
-
 
 
     companion object {
