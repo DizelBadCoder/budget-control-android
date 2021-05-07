@@ -1,5 +1,7 @@
 # Budget control
 
+**It's pet project for education**
+
 ### Description
 Mobile android app for controlling your budgets. 
 Enter calculation and conduct analysis.
