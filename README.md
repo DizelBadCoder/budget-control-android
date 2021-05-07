@@ -23,3 +23,6 @@ Also monitor expense categories.
 * [Firebase SDK](https://firebase.google.com/) - authorization, database connection and analytics
 * [Koin](https://insert-koin.io/) - dependency injection
 * [Kotlin Coroutines](https://developer.android.com/kotlin/coroutines) - reactive programming
+
+### Plugins used
+* [DeployGate](https://deploygate.com/) - deploy app for testing
