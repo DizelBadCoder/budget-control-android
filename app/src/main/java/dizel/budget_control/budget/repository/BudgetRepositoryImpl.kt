@@ -19,8 +19,8 @@ class BudgetRepositoryImpl(
 
     override suspend fun getAllBudgets(): ResultRequest<List<Budget>> {
         return try {
-            val snapshots = getReference()
-                .get().await().children
+
+            val snapshots = getBudgets()
 
             val budgets = snapshots.map { snapshot ->
 
@@ -44,8 +44,7 @@ class BudgetRepositoryImpl(
 
     override suspend fun getBudgetById(id: String): ResultRequest<Budget> {
         return try {
-            val snapshots = getReference()
-                    .get().await().children
+            val snapshots = getBudgets()
 
             val snapshot = snapshots.find { it.key.orEmpty() == id }
 
@@ -67,16 +66,37 @@ class BudgetRepositoryImpl(
             val hashMap = BudgetToHashMapMapper.map(budget)
             val key = hashMap.keys.first()
 
-            getReference().updateChildren(hashMap)
+            val budgetsLength = getReference()
+                .child("BudgetsLength")
+                .get()
+                .await()
+                .getValue(Long::class.java) ?: 0
+
+            getReference()
+                .child("BudgetsLength")
+                .setValue(budgetsLength + 1)
+
+            getReference()
+                .child("Budgets")
+                .updateChildren(hashMap)
+
             ResultRequest.Success(key)
         } catch (ex: Exception) {
             ResultRequest.Error(ex)
         }
     }
 
+    private suspend fun getBudgets() = getReference()
+        .child("Budgets")
+        .get()
+        .await()
+        .children
+
     private fun getReference(): DatabaseReference {
         val user = auth.currentUser ?: throw Exception("User is invalid!")
-        return database.getReference("users/${user.uid}/Budgets")
+        return database.reference
+            .child("users")
+            .child(user.uid)
     }
 
 }
