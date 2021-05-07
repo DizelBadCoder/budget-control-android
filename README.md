@@ -1,18 +1,23 @@
-# budget-control-android
-Android app for controlling your budgets
+# Budget control
 
-Приложение позволяет следить за своим бюджетом. Ввести учёт и проводить анализ.
-[Веб версия](https://denllay.github.io/Budget-Control/) - [Source](https://github.com/Denllay/Budget-Control)
+### Description
+Mobile android app for controlling your budgets. 
+Enter calculation and conduct analysis.
+Add and change your budgets.
+Also monitor expense categories.
 
-## Основная информация об приложении
-* Минимальная версия поддержки - 7.0 (24 API)
-* Язык разработки - Kotlin
-* Сборка - Gradle
-* Среда разработки - Android Studio
-* Архитектура - MVVM
+### Web version
+[Web version](https://denllay.github.io/Budget-Control/) [[Source](https://github.com/Denllay/Budget-Control)]
 
-## Используемые библиотеки
-* Timber - Логгер
-* Firebase SDK - аунтефикация, связь с realtime database и аналитика
-* Koin - внедрение зависимостей
-* Kotlin Coroutines - реактивщина
+### Basic information about the application
+* Minimum support version - 7.0 (24 API)
+* Architecture - MVVM
+* Development language - [Kotlin](https://kotlinlang.org/)
+* Automatic assembly system - [Gradle](https://gradle.org/)
+* Development tool - [Android Studio](https://developer.android.com/studio)
+
+### Libraries used
+* [Timber](https://github.com/JakeWharton/timber) - logger
+* [Firebase SDK](https://firebase.google.com/) - authorization, database connection and analytics
+* [Koin](https://insert-koin.io/) - dependency injection
+* [Kotlin Coroutines](https://developer.android.com/kotlin/coroutines) - reactive programming
