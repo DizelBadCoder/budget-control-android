@@ -27,6 +27,7 @@
             tools:text="Family budget" />
 
         <TextView
+            android:id="@+id/vTotalSumBudget"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"

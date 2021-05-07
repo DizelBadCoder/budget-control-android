@@ -7,12 +7,13 @@ class BudgetApiToBudgetMapper(
     private val categoryList: List<CategoryApi>
 ) {
     fun map(budgetApi: BudgetApi): Budget {
-        budgetApi.let {
+        budgetApi.let { api ->
             return Budget(
-                title = it.title ?: "throw MissingDataException()",
+                title = api.title ?: throw MissingDataException(),
                 categoryList = mapCategoryList(categoryList),
-                currency = getCurrency(it.currency),
-                sum = it.sum ?: 0
+                currency = Currency.valueOf(api.currency.orEmpty()),
+                remainder = api.sum ?: 0 - categoryList.map { it.money ?: 0 }.sum(),
+                sum = api.sum ?: 0
             )
         }
     }
@@ -20,21 +21,14 @@ class BudgetApiToBudgetMapper(
     private fun mapCategoryList(
         categoryList: List<CategoryApi>
     ): List<Category> {
-        return categoryList.map {
+        return categoryList.map { api ->
             Category(
-                id = it.id ?: "throw MissingDataException()",
-                money = it.money ?: 0,
-                name = it.name ?: "Empty name",
-                currency = getCurrency(it.currency),
-                color = it.color ?: "#FFFFFF"
+                id = api.id ?: throw MissingDataException(),
+                money = api.money ?: 0,
+                name = api.name ?: "Empty name",
+                currency = Currency.valueOf(api.currency.orEmpty()),
+                color = api.color ?: "#FFFFFF"
             )
         }
     }
-
-    private fun getCurrency(currency: String?) = try {
-        Currency.valueOf(currency.orEmpty())
-    } catch (ex: IllegalArgumentException) {
-        Currency.values().first()
-    }
-
 }

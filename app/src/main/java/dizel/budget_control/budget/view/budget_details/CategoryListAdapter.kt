@@ -4,14 +4,16 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import dizel.budget_control.R
+import dizel.budget_control.budget.domain.Budget
 import dizel.budget_control.budget.domain.Category
 import dizel.budget_control.databinding.ItemCategoryBinding
 
-class CategoryListAdapter: RecyclerView.Adapter<CategoryListAdapter.CategoryViewHolder>() {
-
-    private val categoryList = ArrayList<Category>()
+class CategoryListAdapter:
+        ListAdapter<Category, CategoryListAdapter.CategoryViewHolder>(CategoryDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -21,10 +23,10 @@ class CategoryListAdapter: RecyclerView.Adapter<CategoryListAdapter.CategoryView
     }
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
-        holder.bind(categoryList[position])
+        holder.bind(currentList[position])
     }
 
-    override fun getItemCount() = categoryList.size
+    override fun getItemCount() = currentList.size
 
     inner class CategoryViewHolder(
             private val binding: ItemCategoryBinding
@@ -35,5 +37,16 @@ class CategoryListAdapter: RecyclerView.Adapter<CategoryListAdapter.CategoryView
             vCategoryMoney.text = "${category.money} ${category.currency.symbol}"
             vCategoryColor.setBackgroundColor(Color.parseColor(category.color))
         }
+    }
+}
+
+
+private class CategoryDiffUtil : DiffUtil.ItemCallback<Category>() {
+    override fun areItemsTheSame(oldItem: Category, newItem: Category): Boolean {
+        return oldItem.id == newItem.id
+    }
+
+    override fun areContentsTheSame(oldItem: Category, newItem: Category): Boolean {
+        return oldItem == newItem
     }
 }

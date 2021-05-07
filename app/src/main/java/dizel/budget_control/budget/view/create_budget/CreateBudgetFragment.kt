@@ -11,6 +11,7 @@ import dizel.budget_control.budget.domain.Currency
 import dizel.budget_control.budget.view.budget_details.BudgetDetailsFragment
 import dizel.budget_control.databinding.FragmentCreateBudgetBinding
 import dizel.budget_control.utils.ResultRequest
+import dizel.budget_control.utils.replaceFragmentWithoutBackStack
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CreateBudgetFragment: Fragment(R.layout.fragment_create_budget) {
@@ -53,11 +54,7 @@ class CreateBudgetFragment: Fragment(R.layout.fragment_create_budget) {
 
     private fun goToBudgetDetailsFragment(id: String) {
         val fragment = BudgetDetailsFragment.newInstance(id)
-
-        parentFragmentManager
-            .beginTransaction()
-            .replace(R.id.vFragmentContainer, fragment)
-            .commit()
+        replaceFragmentWithoutBackStack(fragment)
     }
 
     private fun createBudget() {
@@ -69,12 +66,14 @@ class CreateBudgetFragment: Fragment(R.layout.fragment_create_budget) {
             return
         }
 
-        viewModel.createBudget(Budget(
+        val budget = Budget(
             title = title,
             sum = sum,
+            remainder = sum,
             currency = Currency.values()[binding.vSpinnerCurrency.selectedItemPosition],
             categoryList = emptyList()
-        ))
+        )
+        viewModel.createBudget(budget)
     }
 
     private fun showError(mes: String) {

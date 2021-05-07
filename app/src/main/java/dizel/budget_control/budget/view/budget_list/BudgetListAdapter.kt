@@ -11,7 +11,7 @@ import dizel.budget_control.budget.domain.Budget
 import dizel.budget_control.databinding.ViewBudgetBinding
 
 class BudgetListAdapter:
-    ListAdapter<Budget, BudgetListAdapter.BudgetViewHolder>(OrderDiffUtil()) {
+    ListAdapter<Budget, BudgetListAdapter.BudgetViewHolder>(BudgetDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BudgetViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -32,20 +32,20 @@ class BudgetListAdapter:
 
         @SuppressLint("SetTextI18n")
         fun bind(budget: Budget) = with (binding) {
-            val remainder = budget.sum - budget.categoryList.map { it.money }.sum()
-            val symbol = " " + budget.currency.symbol
+            val symbol = budget.currency.symbol
             val context = this@BudgetViewHolder.itemView.context
 
+            val remainder = "${budget.remainder} $symbol"
+            val total = "${budget.sum} $symbol"
+
             vNameBudget.text = budget.title
-            vTotalSumBudget.text =
-                context.getString(R.string.total, budget.sum.toString() + symbol)
-            vRemainderBudget.text =
-                context.getString(R.string.remainder, remainder.toString() + symbol)
+            vTotalSumBudget.text = context.getString(R.string.total, total)
+            vRemainderBudget.text = context.getString(R.string.remainder, remainder)
         }
     }
 }
 
-private class OrderDiffUtil : DiffUtil.ItemCallback<Budget>() {
+private class BudgetDiffUtil : DiffUtil.ItemCallback<Budget>() {
     override fun areItemsTheSame(oldItem: Budget, newItem: Budget): Boolean {
         return oldItem.title == newItem.title
     }
