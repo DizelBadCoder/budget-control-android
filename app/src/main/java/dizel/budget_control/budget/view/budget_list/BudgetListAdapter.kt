@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import dizel.budget_control.R
 import dizel.budget_control.budget.domain.Budget
+import dizel.budget_control.budget.domain.Category
 import dizel.budget_control.databinding.ViewBudgetBinding
 
 class BudgetListAdapter:
@@ -34,8 +35,9 @@ class BudgetListAdapter:
         fun bind(budget: Budget) = with (binding) {
             val symbol = budget.currency.symbol
             val context = this@BudgetViewHolder.itemView.context
+            val available = budget.categoryList.find { it.id == Category.AVAILABLE_MONEY_KEY }
 
-            val remainder = "${budget.remainder} $symbol"
+            val remainder = "${available?.money} $symbol"
             val total = "${budget.sum} $symbol"
 
             vNameBudget.text = budget.title

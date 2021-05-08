@@ -29,13 +29,11 @@ class BudgetRepositoryImpl(
                     it.getValue(CategoryApi::class.java)!!
                 }
 
-                Timber.d(snapshot.getValue(BudgetApi::class.java)!!.toString())
                 BudgetApiToBudgetMapper(categoryList).map(
                     snapshot.getValue(BudgetApi::class.java)!!
                 )
             }
 
-            Timber.d(budgets.toString())
             ResultRequest.Success(budgets)
         } catch (ex: Exception) {
             ResultRequest.Error(ex)

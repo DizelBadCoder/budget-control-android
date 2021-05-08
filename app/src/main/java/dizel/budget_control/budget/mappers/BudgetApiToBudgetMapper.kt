@@ -12,7 +12,6 @@ class BudgetApiToBudgetMapper(
                 title = api.title ?: throw MissingDataException(),
                 categoryList = mapCategoryList(categoryList),
                 currency = Currency.valueOf(api.currency.orEmpty()),
-                remainder = api.sum ?: 0 - categoryList.map { it.money ?: 0 }.sum(),
                 sum = api.sum ?: 0
             )
         }

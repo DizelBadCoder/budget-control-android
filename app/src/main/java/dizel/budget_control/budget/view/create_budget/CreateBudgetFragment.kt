@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import dizel.budget_control.R
 import dizel.budget_control.budget.domain.Budget
+import dizel.budget_control.budget.domain.Category
 import dizel.budget_control.budget.domain.Currency
 import dizel.budget_control.budget.view.budget_details.BudgetDetailsFragment
 import dizel.budget_control.databinding.FragmentCreateBudgetBinding
@@ -66,12 +67,23 @@ class CreateBudgetFragment: Fragment(R.layout.fragment_create_budget) {
             return
         }
 
+        val currency = Currency.values()[binding.vSpinnerCurrency.selectedItemPosition]
+
+        val categoryList = listOf(
+            Category(
+                id = Category.AVAILABLE_MONEY_KEY,
+                name = Category.AVAILABLE_MONEY_KEY,
+                color = Category.DEFAULT_COLOR,
+                money = sum,
+                currency = currency
+            )
+        )
+
         val budget = Budget(
             title = title,
             sum = sum,
-            remainder = sum,
-            currency = Currency.values()[binding.vSpinnerCurrency.selectedItemPosition],
-            categoryList = emptyList()
+            currency = currency,
+            categoryList = categoryList
         )
         viewModel.createBudget(budget)
     }

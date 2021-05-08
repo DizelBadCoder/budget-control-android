@@ -1,13 +1,13 @@
 package dizel.budget_control.utils
 
 import kotlin.random.Random
-import kotlin.random.nextInt
+import kotlin.random.nextLong
 
 /**
  * Generate key for database
  * @return "id_<random_int>"
  */
 fun generateKey(): String {
-    val randomInt = Random.nextInt(0..Integer.MAX_VALUE)
+    val randomInt = Random.nextLong(0L..Long.MAX_VALUE)
     return "id_${randomInt}"
 }
