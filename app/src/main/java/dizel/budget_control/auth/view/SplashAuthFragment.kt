@@ -5,7 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import dizel.budget_control.R
 import dizel.budget_control.databinding.FragmentSplashAuthBinding
-import dizel.budget_control.utils.replaceFragment
+import dizel.budget_control.utils.startFragment
 
 class SplashAuthFragment: Fragment(R.layout.fragment_splash_auth) {
 
@@ -13,8 +13,8 @@ class SplashAuthFragment: Fragment(R.layout.fragment_splash_auth) {
         super.onViewCreated(view, savedInstanceState)
 
         FragmentSplashAuthBinding.bind(view).apply {
-            vSignInButton.setOnClickListener { replaceFragment(SignInFragment()) }
-            vSignUpButton.setOnClickListener { replaceFragment(SignUpFragment()) }
+            vSignInButton.setOnClickListener { startFragment(SignInFragment()) }
+            vSignUpButton.setOnClickListener { startFragment(SignUpFragment()) }
         }
     }
 }
