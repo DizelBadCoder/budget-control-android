@@ -35,7 +35,6 @@ class CreateBudgetFragment: Fragment(R.layout.fragment_create_budget) {
         }
 
         subscribeUI()
-        setUpToolbar()
     }
 
     private fun subscribeUI() {
@@ -90,9 +89,5 @@ class CreateBudgetFragment: Fragment(R.layout.fragment_create_budget) {
 
     private fun showError(mes: String) {
         Toast.makeText(context, mes, Toast.LENGTH_LONG).show()
-    }
-
-    private fun setUpToolbar() {
-        activity?.actionBar?.setTitle(R.string.create_budget)
     }
 }

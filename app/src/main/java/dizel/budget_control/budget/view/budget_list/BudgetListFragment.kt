@@ -31,7 +31,6 @@ class BudgetListFragment: Fragment(R.layout.fragment_list_budget) {
         }
 
         setUpAdapter()
-        setUpToolbar()
         subscribeUI()
     }
 
@@ -76,10 +75,6 @@ class BudgetListFragment: Fragment(R.layout.fragment_list_budget) {
     private fun setUpAdapter() {
         budgetListAdapter = BudgetListAdapter()
         binding.vRecyclerView.adapter = budgetListAdapter
-    }
-
-    private fun setUpToolbar() {
-        activity?.actionBar?.setTitle(R.string.list_budgets)
     }
 
     companion object {
