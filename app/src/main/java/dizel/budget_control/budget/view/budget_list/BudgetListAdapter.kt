@@ -1,6 +1,7 @@
 package dizel.budget_control.budget.view.budget_list
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -10,6 +11,8 @@ import dizel.budget_control.R
 import dizel.budget_control.budget.domain.Budget
 import dizel.budget_control.budget.domain.Category
 import dizel.budget_control.databinding.ViewBudgetBinding
+import lecho.lib.hellocharts.model.PieChartData
+import lecho.lib.hellocharts.model.SliceValue
 
 class BudgetListAdapter(
     private val viewModel: BudgetListViewModel
@@ -44,6 +47,16 @@ class BudgetListAdapter(
             vNameBudget.text = budget.title
             vTotalSumBudget.text = context.getString(R.string.total, total)
             vRemainderBudget.text = context.getString(R.string.remainder, remainder)
+
+            vChart.pieChartData = PieChartData().apply {
+                values = budget.categoryList.map {
+                    SliceValue(
+                        it.money.toFloat(),
+                        Color.parseColor(it.color)
+                    )
+                }
+                setHasCenterCircle(true)
+            }
 
             binding.root.setOnClickListener {
                 viewModel.navigateToBudgetDetail(budget.id)
