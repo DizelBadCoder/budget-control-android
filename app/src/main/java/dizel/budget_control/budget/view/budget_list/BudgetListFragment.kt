@@ -27,6 +27,7 @@ class BudgetListFragment: Fragment(R.layout.fragment_list_budget) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentListBudgetBinding.bind(view).apply {
             vFloatingButton.setOnClickListener { navigateToCreateBudget() }
+            vStubButton.setOnClickListener { navigateToCreateBudget() }
             vSwipeRefresher.setOnRefreshListener { viewModel.loadBudgetList() }
         }
 
@@ -39,6 +40,7 @@ class BudgetListFragment: Fragment(R.layout.fragment_list_budget) {
             when (result) {
                 is ResultRequest.Success -> {
                     budgetListAdapter?.submitList(result.data)
+                    binding.vStub.isVisible = result.data.isEmpty()
                     hideLoadingState()
                 }
                 is ResultRequest.Error -> {

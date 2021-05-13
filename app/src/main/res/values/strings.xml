@@ -14,6 +14,8 @@
     <string name="password">Password</string>
     <string name="confirm_password">Confirm password</string>
 
+    <string name="budgets_list_is_empty">Oops! The list of budgets is empty.</string>
+
     <string name="create_budget">Create budget</string>
     <string name="create_category">Create category</string>
     <string name="list_budgets">List budgets</string>
