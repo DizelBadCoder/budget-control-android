@@ -12,14 +12,21 @@ import kotlinx.coroutines.launch
 class BudgetDetailsViewModel(
     private val budgetRepository: BudgetRepository
 ): ViewModel() {
+    private var budgetId: String? = null
 
     private val _budget = MutableLiveData<ResultRequest<Budget>>()
     val budget = _budget.asLiveData()
 
     fun loadBudgetById(budgetId: String) {
+        this.budgetId = budgetId
+
         viewModelScope.launch {
             _budget.value = ResultRequest.Loading
             _budget.value = budgetRepository.getBudgetById(budgetId)
         }
+    }
+
+    fun retry() {
+        budgetId?.let { loadBudgetById(it) }
     }
 }
