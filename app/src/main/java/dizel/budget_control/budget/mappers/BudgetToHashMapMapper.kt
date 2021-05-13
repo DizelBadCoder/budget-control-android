@@ -1,13 +1,12 @@
 package dizel.budget_control.budget.mappers
 
 import dizel.budget_control.budget.domain.Budget
-import dizel.budget_control.budget.domain.BudgetId
 import dizel.budget_control.budget.domain.Category
 import dizel.budget_control.utils.generateKey
 
 object BudgetToHashMapMapper {
     fun map(budget: Budget): HashMap<String, Any> {
-        val key = generateKey()
+        val key = budget.id
         val map = hashMapOf<String, Any>(
             "title" to budget.title,
             "budgetSum" to budget.sum,
@@ -32,7 +31,7 @@ object BudgetToHashMapMapper {
                 )
             }
             .forEach {
-                if (it["categoryId"] as BudgetId == Category.AVAILABLE_MONEY_KEY) {
+                if (it["categoryId"] as String == Category.AVAILABLE_MONEY_KEY) {
                     hashMap[Category.AVAILABLE_MONEY_KEY] = it
                 } else {
                     hashMap[generateKey()] = it

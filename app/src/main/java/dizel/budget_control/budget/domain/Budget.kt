@@ -1,6 +1,7 @@
 package dizel.budget_control.budget.domain
 
 data class Budget(
+    val id: String,
     val sum: Long,
     val categoryList: List<Category>,
     val currency: Currency,
@@ -8,7 +9,7 @@ data class Budget(
 )
 
 data class Category(
-    val id: BudgetId,
+    val id: String,
     val name: String,
     val money: Long,
     val currency: Currency,
@@ -19,8 +20,6 @@ data class Category(
         const val DEFAULT_COLOR = "#e4e4e4"
     }
 }
-
-typealias BudgetId = String
 
 enum class Currency(val symbol: String) {
     RUB("₽"),

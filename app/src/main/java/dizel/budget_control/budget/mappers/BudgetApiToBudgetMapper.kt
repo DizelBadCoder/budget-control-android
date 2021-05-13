@@ -3,11 +3,14 @@ package dizel.budget_control.budget.mappers
 import dizel.budget_control.budget.domain.*
 import dizel.budget_control.utils.MissingDataException
 
-class BudgetApiToBudgetMapper(private val categoryList: List<CategoryApi>) {
-
+class BudgetApiToBudgetMapper(
+    private val key: String,
+    private val categoryList: List<CategoryApi>
+) {
     fun map(budgetApi: BudgetApi) =
         budgetApi.let {
             Budget(
+                id = key,
                 title = it.title ?: throw MissingDataException(),
                 categoryList = mapCategoryList(categoryList),
                 currency = Currency.valueOf(it.currency.orEmpty()),

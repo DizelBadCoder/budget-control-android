@@ -6,8 +6,8 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.asLiveData
 import dizel.budget_control.R
-import dizel.budget_control.budget.domain.BudgetId
 import dizel.budget_control.budget.view.budget_details.BudgetDetailsFragment
 import dizel.budget_control.budget.view.create_budget.CreateBudgetFragment
 import dizel.budget_control.utils.ResultRequest
@@ -52,9 +52,12 @@ class BudgetListFragment: Fragment(R.layout.fragment_list_budget) {
             }
         }
 
+        viewModel.budgetDetailFlow.asLiveData().observe(viewLifecycleOwner) {
+            navigateToBudgetDetails(it)
+        }
     }
 
-    private fun navigateToBudgetDetails(id: BudgetId) {
+    private fun navigateToBudgetDetails(id: String) {
         val fragment = BudgetDetailsFragment.newInstance(id)
 
         parentFragmentManager.beginTransaction()
@@ -75,10 +78,9 @@ class BudgetListFragment: Fragment(R.layout.fragment_list_budget) {
     }
 
     private fun setUpAdapter() {
-        budgetListAdapter = BudgetListAdapter()
+        budgetListAdapter = BudgetListAdapter(viewModel)
         binding.vRecyclerView.adapter = budgetListAdapter
     }
-
     companion object {
         const val BUDGET_LIST_KEY = "BUDGET_LIST_BACK_STACK"
     }

@@ -7,6 +7,8 @@ import dizel.budget_control.budget.domain.Budget
 import dizel.budget_control.budget.repository.BudgetRepository
 import dizel.budget_control.utils.ResultRequest
 import dizel.budget_control.utils.asLiveData
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 
 class BudgetListViewModel(
@@ -14,6 +16,9 @@ class BudgetListViewModel(
 ): ViewModel() {
     private val _budgetList = MutableLiveData<ResultRequest<List<Budget>>>()
     val budgetList = _budgetList.asLiveData()
+
+    private val _budgetDetailFlow = MutableSharedFlow<String>()
+    val budgetDetailFlow = _budgetDetailFlow.asSharedFlow()
 
     init {
         loadBudgetList()
@@ -23,6 +28,12 @@ class BudgetListViewModel(
         viewModelScope.launch {
             _budgetList.value = ResultRequest.Loading
             _budgetList.value = budgetRepository.getAllBudgets()
+        }
+    }
+
+    fun navigateToBudgetDetail(budgetId: String) {
+        viewModelScope.launch {
+            _budgetDetailFlow.emit(budgetId)
         }
     }
 }

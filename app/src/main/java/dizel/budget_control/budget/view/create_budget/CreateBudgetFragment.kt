@@ -12,6 +12,7 @@ import dizel.budget_control.budget.domain.Currency
 import dizel.budget_control.budget.view.budget_details.BudgetDetailsFragment
 import dizel.budget_control.databinding.FragmentCreateBudgetBinding
 import dizel.budget_control.utils.ResultRequest
+import dizel.budget_control.utils.generateKey
 import dizel.budget_control.utils.replaceFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -79,6 +80,7 @@ class CreateBudgetFragment: Fragment(R.layout.fragment_create_budget) {
         )
 
         val budget = Budget(
+            id = generateKey(),
             title = title,
             sum = sum,
             currency = currency,

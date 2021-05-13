@@ -11,8 +11,9 @@ import dizel.budget_control.budget.domain.Budget
 import dizel.budget_control.budget.domain.Category
 import dizel.budget_control.databinding.ViewBudgetBinding
 
-class BudgetListAdapter:
-    ListAdapter<Budget, BudgetListAdapter.BudgetViewHolder>(BudgetDiffUtil()) {
+class BudgetListAdapter(
+    private val viewModel: BudgetListViewModel
+): ListAdapter<Budget, BudgetListAdapter.BudgetViewHolder>(BudgetDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BudgetViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -43,6 +44,10 @@ class BudgetListAdapter:
             vNameBudget.text = budget.title
             vTotalSumBudget.text = context.getString(R.string.total, total)
             vRemainderBudget.text = context.getString(R.string.remainder, remainder)
+
+            binding.root.setOnClickListener {
+                viewModel.navigateToBudgetDetail(budget.id)
+            }
         }
     }
 }

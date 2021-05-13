@@ -29,7 +29,8 @@ class BudgetRepositoryImpl(
                     it.getValue(CategoryApi::class.java)!!
                 }
 
-                BudgetApiToBudgetMapper(categoryList).map(
+                val key = snapshot.key!!
+                BudgetApiToBudgetMapper(key, categoryList).map(
                     snapshot.getValue(BudgetApi::class.java)!!
                 )
             }
@@ -51,7 +52,8 @@ class BudgetRepositoryImpl(
                 it.getValue(CategoryApi::class.java)!!
             }
 
-            val budget = BudgetApiToBudgetMapper(categoryApiList).map(budgetApi)
+            val key = snapshot.key!!
+            val budget = BudgetApiToBudgetMapper(key, categoryApiList).map(budgetApi)
 
             ResultRequest.Success(budget)
         } catch (ex: Exception) {
