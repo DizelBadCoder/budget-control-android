@@ -1,9 +1,11 @@
 package dizel.budget_control.budget.view.create_budget
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -30,7 +32,7 @@ class CreateBudgetFragment: Fragment(R.layout.fragment_create_budget) {
 
             val adapter = ArrayAdapter(
                 view.context,
-                android.R.layout.simple_spinner_item,
+                android.R.layout.simple_spinner_dropdown_item,
                 Currency.values().map { "${it.name} - ${it.symbol}" }
             )
             vSpinnerCurrency.adapter = adapter
@@ -100,7 +102,11 @@ class CreateBudgetFragment: Fragment(R.layout.fragment_create_budget) {
     }
 
     private fun showError(mes: String) {
-        Toast.makeText(context, mes, Toast.LENGTH_LONG).show()
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.error_stub_title)
+            .setMessage(mes)
+            .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
+            .show()
     }
 
     companion object {
