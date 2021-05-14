@@ -1,8 +1,10 @@
 package dizel.budget_control.budget.view.create_category
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import dizel.budget_control.R
 import dizel.budget_control.custom.ColorPicker
@@ -31,9 +33,9 @@ class CreateCategoryFragment : Fragment(R.layout.fragment_create_category) {
 
     private fun openColorPicker() {
         ColorPicker(context).apply {
-            setCanceledOnTouchOutside(false)
             setOnDismissListener {
-                binding.vColorPick.setBackgroundColor(color)
+                val colorState = ColorStateList.valueOf(color)
+                binding.vColorPick.backgroundTintList = colorState
             }
             show()
         }

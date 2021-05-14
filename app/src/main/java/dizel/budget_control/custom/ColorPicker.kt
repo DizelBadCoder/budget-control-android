@@ -5,17 +5,21 @@ import android.graphics.Color
 import android.os.Bundle
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatDialog
+import androidx.core.graphics.blue
+import androidx.core.graphics.green
+import androidx.core.graphics.red
 import dizel.budget_control.R
 import dizel.budget_control.databinding.DialogColorPickerBinding
+import timber.log.Timber
 
 class ColorPicker(
     context: Context?
 ): AppCompatDialog(context), SeekBar.OnSeekBarChangeListener {
 
     private var _binding: DialogColorPickerBinding? = null
-    private val binding = _binding!!
+    private val binding get() = _binding!!
 
-    var color = Color.WHITE
+    var color = Color.BLACK
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,8 +27,13 @@ class ColorPicker(
         val view = layoutInflater.inflate(R.layout.dialog_color_picker, null)
         _binding = DialogColorPickerBinding.bind(view).apply {
             vSeekBarColorBlue.setOnSeekBarChangeListener(this@ColorPicker)
+            vSeekBarColorGreen.setOnSeekBarChangeListener(this@ColorPicker)
+            vSeekBarColorRed.setOnSeekBarChangeListener(this@ColorPicker)
+
             vSubmitButton.setOnClickListener { dismiss() }
         }
+        setContentView(view)
+        binding.vColorBox.setBackgroundColor(color)
     }
 
     override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -45,11 +54,16 @@ class ColorPicker(
     }
 
     private fun plusColor(
-        red: Int = 0,
-        green: Int = 0,
-        blue: Int = 0
+        red: Int? = null,
+        green: Int? = null,
+        blue: Int? = null
     ) {
-        color = Color.rgb(red, green, blue)
+        color = Color.rgb(
+            red ?: color.red,
+            green ?: color.green,
+            blue ?: color.blue
+        )
+
         binding.vColorBox.setBackgroundColor(color)
     }
 

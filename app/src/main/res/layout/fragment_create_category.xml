@@ -54,10 +54,13 @@
         android:layout_height="50dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/rounded_bg"
+        android:foreground="@drawable/ic_baseline_colorize_24"
+        android:foregroundTint="@color/black"
+        android:foregroundGravity="center"
         app:layout_constraintBottom_toBottomOf="@+id/vSubmitButton"
         app:layout_constraintEnd_toStartOf="@+id/vSubmitButton"
         app:layout_constraintTop_toTopOf="@+id/vSubmitButton"
-        tools:backgroundTint="@color/black"/>
+        tools:backgroundTint="@color/white"/>
 
     <Spinner
         android:id="@+id/vSpinnerCurrency"

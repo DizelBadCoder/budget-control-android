@@ -2,7 +2,6 @@ package dizel.budget_control.budget.view.budget_list
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.asLiveData
@@ -14,7 +13,6 @@ import dizel.budget_control.databinding.FragmentListBudgetBinding
 import dizel.budget_control.utils.startFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
-import java.lang.Exception
 
 class BudgetListFragment: Fragment(R.layout.fragment_list_budget) {
     private var _binding: FragmentListBudgetBinding? = null
