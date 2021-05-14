@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import dizel.budget_control.R
 import dizel.budget_control.budget.domain.Budget
@@ -36,6 +37,7 @@ class CreateBudgetFragment: Fragment(R.layout.fragment_create_budget) {
         }
 
         subscribeUI()
+        setUpToolbar()
     }
 
     private fun subscribeUI() {
@@ -87,6 +89,14 @@ class CreateBudgetFragment: Fragment(R.layout.fragment_create_budget) {
             categoryList = categoryList
         )
         viewModel.createBudget(budget)
+    }
+
+    private fun setUpToolbar() {
+        with(binding.vToolBar) {
+            (requireActivity() as AppCompatActivity).setSupportActionBar(this)
+            setNavigationIcon(R.drawable.ic_arrow_back)
+            setNavigationOnClickListener { requireActivity().onBackPressed() }
+        }
     }
 
     private fun showError(mes: String) {

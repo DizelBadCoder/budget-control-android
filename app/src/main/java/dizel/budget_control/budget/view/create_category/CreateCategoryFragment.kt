@@ -2,6 +2,7 @@ package dizel.budget_control.budget.view.create_category
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import dizel.budget_control.R
 import dizel.budget_control.custom.ColorPicker
@@ -16,6 +17,15 @@ class CreateCategoryFragment : Fragment(R.layout.fragment_create_category) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentCreateCategoryBinding.bind(view).apply {
             vColorPick.setOnClickListener { openColorPicker() }
+        }
+        setUpToolbar()
+    }
+
+    private fun setUpToolbar() {
+        with(binding.vToolBar) {
+            (requireActivity() as AppCompatActivity).setSupportActionBar(this)
+            setNavigationIcon(R.drawable.ic_arrow_back)
+            setNavigationOnClickListener { requireActivity().onBackPressed() }
         }
     }
 

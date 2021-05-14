@@ -57,6 +57,7 @@ class BudgetListAdapter(
                 }
                 setHasCenterCircle(true)
             }
+            vChart.isInteractive = false
 
             binding.root.setOnClickListener {
                 viewModel.navigateToBudgetDetail(budget.id)

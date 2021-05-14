@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import dizel.budget_control.R
 import dizel.budget_control.budget.domain.Budget
@@ -87,6 +88,7 @@ class BudgetDetailsFragment: Fragment(R.layout.fragment_budget_details) {
                 }
                 setHasCenterCircle(true)
             }
+            vChart.isInteractive = false
         }
 
         categoryAdapter?.submitList(budget.categoryList)
