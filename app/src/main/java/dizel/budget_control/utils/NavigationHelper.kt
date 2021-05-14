@@ -5,23 +5,18 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import dizel.budget_control.R
 
-/**
- * Заменить текущий фрагмент на [fragment] с очисткой стека
- */
-fun Fragment.replaceFragment(fragment: Fragment) {
-    for (i in 0 until parentFragmentManager.backStackEntryCount) {
-        parentFragmentManager.popBackStack()
-    }
+fun Fragment.startFragment(fragment: Fragment, backStackTag: String? = null) {
     parentFragmentManager.beginTransaction()
         .replace(R.id.vFragmentContainer, fragment)
+        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+        .addToBackStack(backStackTag)
         .commit()
 }
 
-fun Fragment.startFragment(fragment: Fragment, tag: String? = null) {
+fun Fragment.startFragmentWithoutBackStack(fragment: Fragment) {
     parentFragmentManager.beginTransaction()
-        .replace(R.id.vFragmentContainer, fragment, tag)
+        .replace(R.id.vFragmentContainer, fragment)
         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-        .addToBackStack(null)
         .commit()
 }
 

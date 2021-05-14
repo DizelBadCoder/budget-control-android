@@ -6,15 +6,15 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import dizel.budget_control.R
 import dizel.budget_control.budget.domain.Budget
 import dizel.budget_control.budget.domain.Category
 import dizel.budget_control.budget.domain.Currency
 import dizel.budget_control.budget.view.budget_details.BudgetDetailsFragment
+import dizel.budget_control.budget.view.budget_list.BudgetListFragment
 import dizel.budget_control.databinding.FragmentCreateBudgetBinding
-import dizel.budget_control.utils.ResultRequest
-import dizel.budget_control.utils.generateKey
-import dizel.budget_control.utils.replaceFragment
+import dizel.budget_control.utils.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CreateBudgetFragment: Fragment(R.layout.fragment_create_budget) {
@@ -57,7 +57,7 @@ class CreateBudgetFragment: Fragment(R.layout.fragment_create_budget) {
 
     private fun navigateToBudgetDetails(id: String) {
         val fragment = BudgetDetailsFragment.newInstance(id)
-        replaceFragment(fragment)
+        startFragmentWithoutBackStack(fragment)
     }
 
     private fun createBudget() {
@@ -101,5 +101,9 @@ class CreateBudgetFragment: Fragment(R.layout.fragment_create_budget) {
 
     private fun showError(mes: String) {
         Toast.makeText(context, mes, Toast.LENGTH_LONG).show()
+    }
+
+    companion object {
+        const val FRAGMENT_NAME = "CreateBudgetFragment"
     }
 }

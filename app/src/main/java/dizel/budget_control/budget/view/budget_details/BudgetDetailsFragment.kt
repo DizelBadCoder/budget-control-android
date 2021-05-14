@@ -109,6 +109,7 @@ class BudgetDetailsFragment: Fragment(R.layout.fragment_budget_details) {
 
     companion object {
         const val BUDGET_KEY_DETAILS = "budget_key_details"
+        const val FRAGMENT_NAME = "BudgetDetailsFragment"
 
         fun newInstance(budgetId: String): Fragment =
             BudgetDetailsFragment().apply {

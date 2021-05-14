@@ -59,17 +59,12 @@ class BudgetListFragment: Fragment(R.layout.fragment_list_budget) {
 
     private fun navigateToBudgetDetails(id: String) {
         val fragment = BudgetDetailsFragment.newInstance(id)
-
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.vFragmentContainer, fragment, tag)
-            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-            .addToBackStack(BUDGET_LIST_KEY)
-            .commit()
+        startFragment(fragment, FRAGMENT_NAME)
     }
 
     private fun navigateToCreateBudget() {
         val fragment = CreateBudgetFragment()
-        startFragment(fragment)
+        startFragment(fragment, FRAGMENT_NAME)
     }
 
     private fun hideLoadingState() {
@@ -83,6 +78,7 @@ class BudgetListFragment: Fragment(R.layout.fragment_list_budget) {
     }
     companion object {
         const val BUDGET_LIST_KEY = "BUDGET_LIST_BACK_STACK"
+        const val FRAGMENT_NAME = "BudgetListFragment"
     }
 }
 

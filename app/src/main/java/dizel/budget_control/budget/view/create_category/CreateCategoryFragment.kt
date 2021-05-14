@@ -38,4 +38,8 @@ class CreateCategoryFragment : Fragment(R.layout.fragment_create_category) {
             show()
         }
     }
+
+    companion object {
+        const val FRAGMENT_NAME = "CreateCategoryFragment"
+    }
 }
