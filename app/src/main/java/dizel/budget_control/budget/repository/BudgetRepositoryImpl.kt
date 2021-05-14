@@ -61,7 +61,7 @@ class BudgetRepositoryImpl(
         }
     }
 
-    override suspend fun createBudget(budget: Budget): ResultRequest<String> {
+    override suspend fun postNewBudget(budget: Budget): ResultRequest<String> {
         return try {
             val hashMap = BudgetToHashMapMapper.map(budget)
             val key = hashMap.keys.first()
@@ -98,6 +98,5 @@ class BudgetRepositoryImpl(
             .child("users")
             .child(user.uid)
     }
-
 }
 

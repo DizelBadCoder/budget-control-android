@@ -1,20 +1,16 @@
 package dizel.budget_control.budget.view.create_budget
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import dizel.budget_control.R
 import dizel.budget_control.budget.domain.Budget
 import dizel.budget_control.budget.domain.Category
 import dizel.budget_control.budget.domain.Currency
 import dizel.budget_control.budget.view.budget_details.BudgetDetailsFragment
-import dizel.budget_control.budget.view.budget_list.BudgetListFragment
 import dizel.budget_control.databinding.FragmentCreateBudgetBinding
 import dizel.budget_control.utils.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -64,33 +60,22 @@ class CreateBudgetFragment: Fragment(R.layout.fragment_create_budget) {
 
     private fun createBudget() {
         val title = binding.vNameBudget.text.toString().ifEmpty { null }
-        val sum = binding.vMoneyBudget.text.toString().toLongOrNull()
+        val money = binding.vMoneyBudget.text.toString().toLongOrNull()
 
-        if (title == null || sum == null) {
+        if (title == null || money == null) {
             showError(getString(R.string.invalidate_fields))
             return
         }
 
         val currency = Currency.values()[binding.vSpinnerCurrency.selectedItemPosition]
 
-        val categoryList = listOf(
-            Category(
-                id = Category.AVAILABLE_MONEY_KEY,
-                name = Category.AVAILABLE_MONEY_KEY,
-                color = Category.DEFAULT_COLOR,
-                money = sum,
-                currency = currency
-            )
+        val params = CreateBudgetViewModel.NewBudgetParams(
+            title = title,
+            money = money,
+            currency = currency
         )
 
-        val budget = Budget(
-            id = generateKey(),
-            title = title,
-            sum = sum,
-            currency = currency,
-            categoryList = categoryList
-        )
-        viewModel.createBudget(budget)
+        viewModel.createBudget(params)
     }
 
     private fun setUpToolbar() {
