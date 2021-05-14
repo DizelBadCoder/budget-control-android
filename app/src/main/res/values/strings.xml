@@ -14,7 +14,10 @@
     <string name="password">Password</string>
     <string name="confirm_password">Confirm password</string>
 
-    <string name="budgets_list_is_empty">Oops! The list of budgets is empty.</string>
+    <string name="budgets_list_is_empty_stub_title">List is empty</string>
+    <string name="budgets_list_is_empty_stub_message">Oops! The list of budgets is empty</string>
+
+    <string name="error_stub_title">Something went wrong</string>
 
     <string name="create_budget">Create budget</string>
     <string name="create_category">Create category</string>

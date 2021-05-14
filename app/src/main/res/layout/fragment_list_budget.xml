@@ -66,25 +66,36 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/vStubMessage"
+            android:id="@+id/vStubTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/budgets_list_is_empty"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="@string/budgets_list_is_empty_stub_title"
+            android:textSize="24sp"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/vStubMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/budgets_list_is_empty_stub_message"
+            android:textSize="18sp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/vStubTitle"
+            app:layout_constraintStart_toStartOf="@+id/vStubTitle"
+            app:layout_constraintTop_toBottomOf="@+id/vStubTitle" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/vStubButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:text="@string/create_budget"
-            app:layout_constraintEnd_toEndOf="@+id/vStubMessage"
-            app:layout_constraintStart_toStartOf="@+id/vStubMessage"
-            app:layout_constraintTop_toBottomOf="@+id/vStubMessage" />
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/vStubMessage"
+            app:layout_constraintLeft_toLeftOf="@id/vStubMessage"
+            app:layout_constraintRight_toRightOf="@id/vStubMessage"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -2,10 +2,9 @@ package dizel.budget_control.budget.view.budget_list
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.asLiveData
 import dizel.budget_control.R
 import dizel.budget_control.budget.view.budget_details.BudgetDetailsFragment
@@ -15,6 +14,7 @@ import dizel.budget_control.databinding.FragmentListBudgetBinding
 import dizel.budget_control.utils.startFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
+import java.lang.Exception
 
 class BudgetListFragment: Fragment(R.layout.fragment_list_budget) {
     private var _binding: FragmentListBudgetBinding? = null
@@ -40,12 +40,15 @@ class BudgetListFragment: Fragment(R.layout.fragment_list_budget) {
             when (result) {
                 is ResultRequest.Success -> {
                     budgetListAdapter?.submitList(result.data)
-                    binding.vStub.isVisible = result.data.isEmpty()
+                    when (result.data.isEmpty()) {
+                        true -> showEmptyListStub()
+                        false -> hideStub()
+                    }
                     hideLoadingState()
                 }
                 is ResultRequest.Error -> {
                     Timber.e(result.exception)
-                    Toast.makeText(context, result.exception.message, Toast.LENGTH_SHORT).show()
+                    showErrorStub(result.exception)
                     hideLoadingState()
                 }
                 is ResultRequest.Loading -> { }
@@ -55,6 +58,28 @@ class BudgetListFragment: Fragment(R.layout.fragment_list_budget) {
         viewModel.budgetDetailFlow.asLiveData().observe(viewLifecycleOwner) {
             navigateToBudgetDetails(it)
         }
+    }
+
+    private fun showErrorStub(throwable: Throwable) {
+        with (binding) {
+            vStub.isVisible = true
+            vStubButton.isVisible = false
+            vStubTitle.setText(R.string.error_stub_title)
+            vStubMessage.text = throwable.message
+        }
+    }
+
+    private fun showEmptyListStub() {
+        with (binding) {
+            vStub.isVisible = true
+            vStubButton.isVisible = true
+            vStubTitle.setText(R.string.budgets_list_is_empty_stub_title)
+            vStubMessage.setText(R.string.budgets_list_is_empty_stub_message)
+        }
+    }
+
+    private fun hideStub() {
+        binding.vStub.isVisible = false
     }
 
     private fun navigateToBudgetDetails(id: String) {
