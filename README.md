@@ -12,7 +12,7 @@ Also monitor expense categories.
 [Web version](https://denllay.github.io/Budget-Control/) [[Source](https://github.com/Denllay/Budget-Control)]
 
 ### Basic information about the application
-* Minimum support version - 7.0 (24 API)
+* Minimum support version - 5.0 (21 API)
 * Architecture - MVVM
 * Development language - [Kotlin](https://kotlinlang.org/)
 * Automatic assembly system - [Gradle](https://gradle.org/)
