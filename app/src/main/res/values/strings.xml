@@ -21,6 +21,8 @@
 
     <string name="create_budget">Create budget</string>
     <string name="create_category">Create category</string>
+    <string name="delete_budget">Delete budget</string>
+    <string name="delete_category">Delete category</string>
     <string name="list_budgets">List budgets</string>
 
     <string name="total">Total: %s</string>

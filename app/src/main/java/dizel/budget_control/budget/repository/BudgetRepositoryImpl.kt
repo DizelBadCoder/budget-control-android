@@ -1,26 +1,21 @@
 package dizel.budget_control.budget.repository
 
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 import dizel.budget_control.budget.domain.Budget
 import dizel.budget_control.budget.domain.BudgetApi
 import dizel.budget_control.budget.domain.CategoryApi
 import dizel.budget_control.budget.mappers.BudgetApiToBudgetMapper
-import dizel.budget_control.budget.mappers.BudgetToHashMapMapper
+import dizel.budget_control.utils.DatabaseHelper
 import dizel.budget_control.utils.ResultRequest
-import kotlinx.coroutines.tasks.await
 import timber.log.Timber
 
 class BudgetRepositoryImpl(
-    private val database: FirebaseDatabase,
-    private val auth: FirebaseAuth
+    private val databaseHelper: DatabaseHelper
 ): BudgetRepository {
 
     override suspend fun getAllBudgets(): ResultRequest<List<Budget>> {
         return try {
 
-            val snapshots = getBudgets()
+            val snapshots = databaseHelper.getBudgets()
 
             val budgets = snapshots.map { snapshot ->
 
@@ -43,7 +38,7 @@ class BudgetRepositoryImpl(
 
     override suspend fun getBudgetById(id: String): ResultRequest<Budget> {
         return try {
-            val snapshots = getBudgets()
+            val snapshots = databaseHelper.getBudgets()
 
             val snapshot = snapshots.find { it.key.orEmpty() == id }
 
@@ -59,44 +54,6 @@ class BudgetRepositoryImpl(
         } catch (ex: Exception) {
             ResultRequest.Error(ex)
         }
-    }
-
-    override suspend fun postNewBudget(budget: Budget): ResultRequest<String> {
-        return try {
-            val hashMap = BudgetToHashMapMapper.map(budget)
-            val key = hashMap.keys.first()
-
-            val budgetsLength = getReference()
-                .child("BudgetsLength")
-                .get()
-                .await()
-                .getValue(Long::class.java) ?: 0
-
-            getReference()
-                .child("BudgetsLength")
-                .setValue(budgetsLength + 1)
-
-            getReference()
-                .child("Budgets")
-                .updateChildren(hashMap)
-
-            ResultRequest.Success(key)
-        } catch (ex: Exception) {
-            ResultRequest.Error(ex)
-        }
-    }
-
-    private suspend fun getBudgets() = getReference()
-        .child("Budgets")
-        .get()
-        .await()
-        .children
-
-    private fun getReference(): DatabaseReference {
-        val user = auth.currentUser ?: throw Exception("User is invalid!")
-        return database.reference
-            .child("users")
-            .child(user.uid)
     }
 }
 

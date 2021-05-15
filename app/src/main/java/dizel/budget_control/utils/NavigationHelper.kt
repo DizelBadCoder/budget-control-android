@@ -5,6 +5,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import dizel.budget_control.R
 
+fun Fragment.replaceFragment(fragment: Fragment) {
+    for (i in 0 until parentFragmentManager.backStackEntryCount) {
+        parentFragmentManager.popBackStack()
+    }
+    startFragmentWithoutBackStack(fragment)
+}
+
 fun Fragment.startFragment(fragment: Fragment, backStackTag: String? = null) {
     parentFragmentManager.beginTransaction()
         .replace(R.id.vFragmentContainer, fragment)

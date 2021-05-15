@@ -7,45 +7,30 @@ import dizel.budget_control.budget.domain.Budget
 import dizel.budget_control.budget.domain.Category
 import dizel.budget_control.budget.domain.Currency
 import dizel.budget_control.budget.repository.BudgetRepository
+import dizel.budget_control.budget.repository.use_cases.CreateBudgetUseCase
 import dizel.budget_control.utils.ResultRequest
 import dizel.budget_control.utils.asLiveData
 import dizel.budget_control.utils.generateKey
 import kotlinx.coroutines.launch
 
 class CreateBudgetViewModel(
-    private val budgetRepository: BudgetRepository
+    private val createBudgetUseCase: CreateBudgetUseCase
 ): ViewModel() {
 
     private val _createBudgetFlow = MutableLiveData<ResultRequest<String>>()
     val createBudgetFlow = _createBudgetFlow.asLiveData()
 
-    private fun postNewBudget(budget: Budget) {
+    fun createBudget(params: NewBudgetParams) {
+        val useCaseParams = CreateBudgetUseCase.Params(
+            title = params.title,
+            money = params.money,
+            currency = params.currency
+        )
+
         viewModelScope.launch {
             _createBudgetFlow.value = ResultRequest.Loading
-            _createBudgetFlow.value = budgetRepository.postNewBudget(budget)
+            _createBudgetFlow.value = createBudgetUseCase.execute(useCaseParams)
         }
-    }
-
-    fun createBudget(params: NewBudgetParams) {
-        val categoryList = listOf(
-            Category(
-                id = Category.AVAILABLE_MONEY_KEY,
-                name = Category.AVAILABLE_MONEY_KEY,
-                color = Category.DEFAULT_COLOR,
-                money = params.money,
-                currency = params.currency
-            )
-        )
-
-        val budget = Budget(
-            id = generateKey(),
-            title = params.title,
-            sum = params.money,
-            currency = params.currency,
-            categoryList = categoryList
-        )
-
-        postNewBudget(budget)
     }
 
     data class NewBudgetParams(

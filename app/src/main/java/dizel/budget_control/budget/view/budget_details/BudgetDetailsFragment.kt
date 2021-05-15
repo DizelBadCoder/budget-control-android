@@ -2,6 +2,8 @@ package dizel.budget_control.budget.view.budget_details
 
 import android.graphics.Color
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -9,10 +11,12 @@ import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import dizel.budget_control.R
 import dizel.budget_control.budget.domain.Budget
+import dizel.budget_control.budget.view.budget_list.BudgetListFragment
 import dizel.budget_control.budget.view.create_category.CreateCategoryFragment
 import dizel.budget_control.databinding.FragmentBudgetDetailsBinding
 import dizel.budget_control.utils.MissingDataException
 import dizel.budget_control.utils.ResultRequest
+import dizel.budget_control.utils.replaceFragment
 import dizel.budget_control.utils.startFragment
 import lecho.lib.hellocharts.model.PieChartData
 import lecho.lib.hellocharts.model.SliceValue
@@ -34,6 +38,7 @@ class BudgetDetailsFragment: Fragment(R.layout.fragment_budget_details) {
             vCreateCategoryButton.setOnClickListener { navigateToCreateCategory() }
         }
 
+        setHasOptionsMenu(true)
         setUpToolbar()
         loadBudgetFromArguments()
         subscribeUi()
@@ -98,8 +103,36 @@ class BudgetDetailsFragment: Fragment(R.layout.fragment_budget_details) {
         with(binding.vToolBar) {
             (requireActivity() as AppCompatActivity).setSupportActionBar(this)
             setNavigationIcon(R.drawable.ic_arrow_back)
-            setNavigationOnClickListener { requireActivity().onBackPressed() }
+            setNavigationOnClickListener {
+                val fragment = BudgetListFragment()
+                replaceFragment(fragment)
+            }
+
+            setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.menu_delete_budget -> deleteThisBudget()
+                }
+                true
+            }
         }
+    }
+
+    private fun deleteThisBudget() {
+        viewModel.deleteBudget().observe(viewLifecycleOwner) {
+            when (it) {
+                is ResultRequest.Success -> {
+                    val fragment = BudgetListFragment()
+                    replaceFragment(fragment)
+                }
+                is ResultRequest.Error -> {
+                    Timber.e(it.exception)
+                }
+            }
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.budget_details_menu, menu)
     }
 
     private fun navigateToCreateCategory() {
