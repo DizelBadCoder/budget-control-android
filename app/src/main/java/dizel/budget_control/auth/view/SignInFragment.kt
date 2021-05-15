@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import dizel.budget_control.budget.view.MainActivity
@@ -24,6 +25,8 @@ class SignInFragment: Fragment(R.layout.fragment_sing_in) {
         _binding = FragmentSingInBinding.bind(view).apply {
             vSignInButton.setOnClickListener { signInUser() }
         }
+
+        setUpToolbar()
     }
 
     private fun signInUser() {
@@ -52,6 +55,16 @@ class SignInFragment: Fragment(R.layout.fragment_sing_in) {
                         }
                     }
                 }
+    }
+
+    private fun setUpToolbar() {
+        with (binding.vToolBar) {
+            (requireActivity() as AppCompatActivity).setSupportActionBar(this)
+            setNavigationIcon(R.drawable.ic_arrow_back)
+            setNavigationOnClickListener {
+                requireActivity().onBackPressed()
+            }
+        }
     }
 
 
