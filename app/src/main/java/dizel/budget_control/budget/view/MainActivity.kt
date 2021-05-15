@@ -20,11 +20,4 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         val fragment = BudgetListFragment()
         replaceFragment(fragment)
     }
-
-    private fun signOutUser() {
-        FirebaseAuth.getInstance().signOut()
-
-        startActivity(Intent(this, AuthActivity::class.java))
-        finish()
-    }
 }

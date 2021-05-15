@@ -68,12 +68,7 @@ class CreateBudgetFragment: Fragment(R.layout.fragment_create_budget) {
         }
 
         val currency = Currency.values()[binding.vSpinnerCurrency.selectedItemPosition]
-
-        val params = CreateBudgetViewModel.NewBudgetParams(
-            title = title,
-            money = money,
-            currency = currency
-        )
+        val params = CreateBudgetViewModel.NewBudgetParams(title, money, currency)
 
         viewModel.createBudget(params)
     }

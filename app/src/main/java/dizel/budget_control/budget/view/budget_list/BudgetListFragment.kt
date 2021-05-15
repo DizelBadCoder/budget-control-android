@@ -1,11 +1,17 @@
 package dizel.budget_control.budget.view.budget_list
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.asLiveData
+import com.google.firebase.auth.FirebaseAuth
 import dizel.budget_control.R
+import dizel.budget_control.auth.view.AuthActivity
 import dizel.budget_control.budget.view.budget_details.BudgetDetailsFragment
 import dizel.budget_control.budget.view.create_budget.CreateBudgetFragment
 import dizel.budget_control.utils.ResultRequest
@@ -29,6 +35,9 @@ class BudgetListFragment: Fragment(R.layout.fragment_list_budget) {
             vSwipeRefresher.setOnRefreshListener { viewModel.loadBudgetList() }
         }
 
+        setHasOptionsMenu(true)
+
+        setUpToolbar()
         setUpAdapter()
         subscribeUI()
     }
@@ -99,6 +108,30 @@ class BudgetListFragment: Fragment(R.layout.fragment_list_budget) {
         budgetListAdapter = BudgetListAdapter(viewModel)
         binding.vRecyclerView.adapter = budgetListAdapter
     }
+
+    private fun setUpToolbar() {
+        with (binding.vToolBar) {
+            (requireActivity() as AppCompatActivity).setSupportActionBar(this)
+            setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.menu_logout -> singOut()
+                }
+                true
+            }
+        }
+    }
+
+    private fun singOut() {
+        FirebaseAuth.getInstance().signOut()
+
+        startActivity(Intent(context, AuthActivity::class.java))
+        (requireActivity() as AppCompatActivity).finish()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.budget_list_menu, menu)
+    }
+
     companion object {
         const val BUDGET_LIST_KEY = "BUDGET_LIST_BACK_STACK"
         const val FRAGMENT_NAME = "BudgetListFragment"
