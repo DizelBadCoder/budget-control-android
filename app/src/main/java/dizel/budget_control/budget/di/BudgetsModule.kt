@@ -29,7 +29,7 @@ val budgetsModule = module {
 
     factory { CreateBudgetUseCase(get()) }
     factory { RemoveBudgetUseCase(get()) }
-    factory { CreateCategoryUseCase(get()) }
+    factory { CreateCategoryUseCase(get(), get()) }
     factory { RemoveCategoryUseCase() }
     factory { SetAvailableMoneyUseCase(get()) }
 }

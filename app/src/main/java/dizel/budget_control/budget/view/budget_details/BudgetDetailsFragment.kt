@@ -30,6 +30,7 @@ class BudgetDetailsFragment: Fragment(R.layout.fragment_budget_details) {
 
     private val viewModel by viewModel<BudgetDetailsViewModel>()
 
+    private var budgetId: String? = null
     private var categoryAdapter: CategoryListAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -64,6 +65,7 @@ class BudgetDetailsFragment: Fragment(R.layout.fragment_budget_details) {
 
     private fun loadBudgetFromArguments() {
         arguments?.getString(BUDGET_KEY_DETAILS).let {
+            budgetId = it
             viewModel.loadBudgetById(
                 budgetId = it ?: throw MissingDataException()
             )
@@ -135,6 +137,7 @@ class BudgetDetailsFragment: Fragment(R.layout.fragment_budget_details) {
                 is ResultRequest.Error -> {
                     Timber.e(it.exception)
                 }
+                is ResultRequest.Loading -> { }
             }
         }
     }
@@ -149,7 +152,7 @@ class BudgetDetailsFragment: Fragment(R.layout.fragment_budget_details) {
     }
 
     private fun navigateToCreateCategory() {
-        val fragment = CreateCategoryFragment()
+        val fragment = CreateCategoryFragment.newInstance(budgetId!!)
         startFragment(fragment)
     }
 

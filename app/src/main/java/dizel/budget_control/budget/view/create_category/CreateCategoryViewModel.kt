@@ -22,7 +22,8 @@ class CreateCategoryViewModel(
                     title = params.title,
                     color = params.color,
                     currency = params.currency,
-                    money = params.money
+                    money = params.money,
+                    budgetId = params.budgetId
                 )
             )
         }
@@ -34,6 +35,7 @@ class CreateCategoryViewModel(
         val title: String,
         val color: Int,
         val currency: Currency,
-        val money: Long
+        val money: Long,
+        val budgetId: String
     )
 }

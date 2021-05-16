@@ -11,9 +11,11 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import dizel.budget_control.R
 import dizel.budget_control.budget.domain.Currency
+import dizel.budget_control.budget.view.budget_details.BudgetDetailsFragment
 import dizel.budget_control.budget.view.create_budget.CreateBudgetViewModel
 import dizel.budget_control.custom.ColorPicker
 import dizel.budget_control.databinding.FragmentCreateCategoryBinding
+import dizel.budget_control.utils.MissingDataException
 import dizel.budget_control.utils.ResultRequest
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
@@ -26,6 +28,7 @@ class CreateCategoryFragment : Fragment(R.layout.fragment_create_category) {
     private val binding get() = _binding!!
 
     private var colorCategory = Color.WHITE
+    private var budgetId: String? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -41,6 +44,7 @@ class CreateCategoryFragment : Fragment(R.layout.fragment_create_category) {
             vSpinnerCurrency.adapter = adapter
         }
         setUpToolbar()
+        setUpBudgetIdFromArgument()
     }
 
     private fun createCategory() {
@@ -57,10 +61,9 @@ class CreateCategoryFragment : Fragment(R.layout.fragment_create_category) {
             title = name,
             color = colorCategory,
             money = money,
-            currency = currency
+            currency = currency,
+            budgetId = budgetId!!
         )
-
-
 
         viewModel.createCategory(params).observe(viewLifecycleOwner) {
             when (it) {
@@ -75,6 +78,10 @@ class CreateCategoryFragment : Fragment(R.layout.fragment_create_category) {
         }
     }
 
+    private fun setUpBudgetIdFromArgument() {
+        budgetId = arguments?.getString(BUDGET_ID_KEY)
+    }
+
     private fun setUpToolbar() {
         with(binding.vToolBar) {
             (requireActivity() as AppCompatActivity).setSupportActionBar(this)
@@ -86,6 +93,7 @@ class CreateCategoryFragment : Fragment(R.layout.fragment_create_category) {
     private fun openColorPicker() {
         ColorPicker(context).apply {
             setOnDismissListener {
+                colorCategory = color
                 val colorState = ColorStateList.valueOf(color)
                 binding.vColorPick.backgroundTintList = colorState
             }
@@ -103,5 +111,13 @@ class CreateCategoryFragment : Fragment(R.layout.fragment_create_category) {
 
     companion object {
         const val FRAGMENT_NAME = "CreateCategoryFragment"
+        const val BUDGET_ID_KEY = "Budget_id_key"
+
+        fun newInstance(budgetId: String): Fragment =
+            CreateCategoryFragment().apply {
+                arguments = Bundle().apply {
+                    putString(BUDGET_ID_KEY, budgetId)
+                }
+            }
     }
 }
