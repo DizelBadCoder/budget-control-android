@@ -128,6 +128,11 @@ class BudgetListFragment: Fragment(R.layout.fragment_list_budget) {
         (requireActivity() as AppCompatActivity).finish()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.loadBudgetList()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.budget_list_menu, menu)
     }

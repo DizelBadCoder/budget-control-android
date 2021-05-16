@@ -7,10 +7,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import dizel.budget_control.R
-import dizel.budget_control.budget.domain.Budget
-import dizel.budget_control.budget.domain.Category
 import dizel.budget_control.budget.domain.Currency
 import dizel.budget_control.budget.view.budget_details.BudgetDetailsFragment
+import dizel.budget_control.budget.view.budget_list.BudgetListFragment
 import dizel.budget_control.databinding.FragmentCreateBudgetBinding
 import dizel.budget_control.utils.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -34,28 +33,13 @@ class CreateBudgetFragment: Fragment(R.layout.fragment_create_budget) {
             vSpinnerCurrency.adapter = adapter
         }
 
-        subscribeUI()
         setUpToolbar()
-    }
-
-    private fun subscribeUI() {
-        viewModel.createBudgetFlow.observe(viewLifecycleOwner) { result ->
-            when (result) {
-                is ResultRequest.Success -> {
-                    val id = result.data
-                    navigateToBudgetDetails(id)
-                }
-                is ResultRequest.Error -> {
-                    showError(result.exception.message ?: getString(R.string.unknown_error))
-                }
-                is ResultRequest.Loading -> { }
-            }
-        }
     }
 
     private fun navigateToBudgetDetails(id: String) {
         val fragment = BudgetDetailsFragment.newInstance(id)
-        startFragmentWithoutBackStack(fragment)
+        parentFragmentManager.popBackStack()
+        startFragment(fragment, BudgetListFragment.FRAGMENT_NAME)
     }
 
     private fun createBudget() {
@@ -70,7 +54,18 @@ class CreateBudgetFragment: Fragment(R.layout.fragment_create_budget) {
         val currency = Currency.values()[binding.vSpinnerCurrency.selectedItemPosition]
         val params = CreateBudgetViewModel.NewBudgetParams(title, money, currency)
 
-        viewModel.createBudget(params)
+        viewModel.createBudget(params).observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is ResultRequest.Success -> {
+                    val id = result.data
+                    navigateToBudgetDetails(id)
+                }
+                is ResultRequest.Error -> {
+                    showError(result.exception.message ?: getString(R.string.unknown_error))
+                }
+                is ResultRequest.Loading -> { }
+            }
+        }
     }
 
     private fun setUpToolbar() {
@@ -87,9 +82,5 @@ class CreateBudgetFragment: Fragment(R.layout.fragment_create_budget) {
             .setMessage(mes)
             .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
             .show()
-    }
-
-    companion object {
-        const val FRAGMENT_NAME = "CreateBudgetFragment"
     }
 }

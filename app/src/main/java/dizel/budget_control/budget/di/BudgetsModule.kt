@@ -9,10 +9,7 @@ import dizel.budget_control.budget.view.create_budget.CreateBudgetViewModel
 import dizel.budget_control.budget.view.create_category.CreateCategoryViewModel
 import dizel.budget_control.budget.repository.BudgetRepository
 import dizel.budget_control.budget.repository.BudgetRepositoryImpl
-import dizel.budget_control.budget.repository.use_cases.CreateBudgetUseCase
-import dizel.budget_control.budget.repository.use_cases.CreateCategoryUseCase
-import dizel.budget_control.budget.repository.use_cases.RemoveBudgetUseCase
-import dizel.budget_control.budget.repository.use_cases.RemoveCategoryUseCase
+import dizel.budget_control.budget.repository.use_cases.*
 import dizel.budget_control.utils.DatabaseHelper
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -32,6 +29,7 @@ val budgetsModule = module {
 
     factory { CreateBudgetUseCase(get()) }
     factory { RemoveBudgetUseCase(get()) }
-    factory { CreateCategoryUseCase() }
+    factory { CreateCategoryUseCase(get()) }
     factory { RemoveCategoryUseCase() }
+    factory { SetAvailableMoneyUseCase(get()) }
 }

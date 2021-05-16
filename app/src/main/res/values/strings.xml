@@ -30,6 +30,7 @@
 
     <string name="invalidate_fields">Fields is invalidate.</string>
     <string name="unknown_error">Unknown error.</string>
+    <string name="ask_you_are_sure">You are sure?</string>
 
     <!-- Errors auth -->
     <string name="error_auth">Authentication failed</string>

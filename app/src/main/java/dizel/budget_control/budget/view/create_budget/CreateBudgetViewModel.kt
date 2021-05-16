@@ -17,20 +17,23 @@ class CreateBudgetViewModel(
     private val createBudgetUseCase: CreateBudgetUseCase
 ): ViewModel() {
 
-    private val _createBudgetFlow = MutableLiveData<ResultRequest<String>>()
-    val createBudgetFlow = _createBudgetFlow.asLiveData()
+    fun createBudget(
+        params: NewBudgetParams
+    ): MutableLiveData<ResultRequest<String>> {
+        val data = MutableLiveData<ResultRequest<String>>()
 
-    fun createBudget(params: NewBudgetParams) {
-        val useCaseParams = CreateBudgetUseCase.Params(
-            title = params.title,
-            money = params.money,
-            currency = params.currency
-        )
+        data.value = ResultRequest.Loading
 
         viewModelScope.launch {
-            _createBudgetFlow.value = ResultRequest.Loading
-            _createBudgetFlow.value = createBudgetUseCase.execute(useCaseParams)
+            data.value = createBudgetUseCase.execute(
+                CreateBudgetUseCase.Params(
+                    title = params.title,
+                    money = params.money,
+                    currency = params.currency
+                )
+            )
         }
+        return data
     }
 
     data class NewBudgetParams(

@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
@@ -54,7 +55,6 @@ class BudgetDetailsFragment: Fragment(R.layout.fragment_budget_details) {
                 }
                 is ResultRequest.Error -> {
                     Timber.e(result.exception)
-                    Toast.makeText(context, result.exception.message, Toast.LENGTH_SHORT).show()
                     hideLoadingBar()
                 }
                 is ResultRequest.Loading -> { }
@@ -104,17 +104,25 @@ class BudgetDetailsFragment: Fragment(R.layout.fragment_budget_details) {
             (requireActivity() as AppCompatActivity).setSupportActionBar(this)
             setNavigationIcon(R.drawable.ic_arrow_back)
             setNavigationOnClickListener {
-                val fragment = BudgetListFragment()
-                replaceFragment(fragment)
+                parentFragmentManager.popBackStack()
             }
 
             setOnMenuItemClickListener {
                 when (it.itemId) {
-                    R.id.menu_delete_budget -> deleteThisBudget()
+                    R.id.menu_delete_budget -> askToDeleteBudget()
                 }
                 true
             }
         }
+    }
+
+    private fun askToDeleteBudget() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.delete_budget)
+            .setMessage(R.string.ask_you_are_sure)
+            .setPositiveButton("Yes") { _, _ -> deleteThisBudget() }
+            .setNegativeButton("No") { dialog, _ -> dialog.dismiss() }
+            .show()
     }
 
     private fun deleteThisBudget() {
@@ -133,6 +141,11 @@ class BudgetDetailsFragment: Fragment(R.layout.fragment_budget_details) {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.budget_details_menu, menu)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.retry()
     }
 
     private fun navigateToCreateCategory() {

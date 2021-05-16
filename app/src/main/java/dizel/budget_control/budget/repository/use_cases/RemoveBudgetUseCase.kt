@@ -17,6 +17,16 @@ class RemoveBudgetUseCase(
 
             snapshot?.ref?.removeValue()?.await()
 
+            val budgetsLength = (databaseHelper.getReference()
+                .child("BudgetsLength")
+                .get()
+                .await()
+                .getValue(Long::class.java) ?: 0) - 1
+
+            databaseHelper.getReference()
+                .child("BudgetsLength")
+                .setValue(budgetsLength)
+
             ResultRequest.Success(Unit)
         } catch (ex: Exception) {
             ResultRequest.Error(ex)

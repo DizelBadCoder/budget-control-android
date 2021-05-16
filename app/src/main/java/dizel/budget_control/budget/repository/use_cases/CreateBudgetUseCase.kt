@@ -35,15 +35,15 @@ class CreateBudgetUseCase(
             val hashMap = BudgetToHashMapMapper.map(budget)
             val key = hashMap.keys.first()
 
-            val budgetsLength = databaseHelper.getReference()
+            val budgetsLength = (databaseHelper.getReference()
                 .child("BudgetsLength")
                 .get()
                 .await()
-                .getValue(Long::class.java) ?: 0
+                .getValue(Long::class.java) ?: 0) + 1
 
             databaseHelper.getReference()
                 .child("BudgetsLength")
-                .setValue(budgetsLength + 1)
+                .setValue(budgetsLength)
 
             databaseHelper.getReference()
                 .child("Budgets")
