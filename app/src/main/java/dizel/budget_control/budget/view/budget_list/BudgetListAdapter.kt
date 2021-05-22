@@ -11,6 +11,7 @@ import dizel.budget_control.R
 import dizel.budget_control.budget.domain.Budget
 import dizel.budget_control.budget.domain.Category
 import dizel.budget_control.databinding.ViewBudgetBinding
+import dizel.budget_control.utils.toMoneyMask
 import lecho.lib.hellocharts.model.PieChartData
 import lecho.lib.hellocharts.model.SliceValue
 
@@ -37,12 +38,11 @@ class BudgetListAdapter(
 
         @SuppressLint("SetTextI18n")
         fun bind(budget: Budget) = with (binding) {
-            val symbol = budget.currency.symbol
             val context = this@BudgetViewHolder.itemView.context
             val available = budget.categoryList.find { it.id == Category.AVAILABLE_MONEY_KEY }
 
-            val remainder = "${available?.money} $symbol"
-            val total = "${budget.sum} $symbol"
+            val remainder = available?.money?.toMoneyMask(budget.currency)
+            val total = budget.sum.toMoneyMask(budget.currency)
 
             vNameBudget.text = budget.title
             vTotalSumBudget.text = context.getString(R.string.total, total)

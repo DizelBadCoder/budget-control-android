@@ -35,7 +35,7 @@ class CreateCategoryViewModel(
         val title: String,
         val color: Int,
         val currency: Currency,
-        val money: Long,
+        val money: Double,
         val budgetId: String
     )
 }

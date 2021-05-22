@@ -22,7 +22,7 @@ object BudgetToHashMapMapper {
 
         categoryList
             .map {
-                hashMapOf<String, Any>(
+                hashMapOf(
                     "categoryId" to it.id,
                     "categoryName" to it.name,
                     "categoryMoney" to it.money,

@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import dizel.budget_control.R
-import dizel.budget_control.budget.domain.Budget
 import dizel.budget_control.budget.domain.Category
 import dizel.budget_control.databinding.ItemCategoryBinding
+import dizel.budget_control.utils.toMoneyMask
 
 class CategoryListAdapter:
         ListAdapter<Category, CategoryListAdapter.CategoryViewHolder>(CategoryDiffUtil()) {
@@ -34,7 +34,7 @@ class CategoryListAdapter:
         @SuppressLint("SetTextI18n")
         fun bind(category: Category) = with (binding) {
             vCategoryName.text = category.name
-            vCategoryMoney.text = "${category.money} ${category.currency.symbol}"
+            vCategoryMoney.text = category.money.toMoneyMask(category.currency)
             vCategoryColor.setBackgroundColor(Color.parseColor(category.color))
         }
     }

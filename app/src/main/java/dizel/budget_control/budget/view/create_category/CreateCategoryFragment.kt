@@ -49,7 +49,7 @@ class CreateCategoryFragment : Fragment(R.layout.fragment_create_category) {
 
     private fun createCategory() {
         val name = binding.vNameCategory.text.toString().ifEmpty { null }
-        val money = binding.vMoneyCategory.text.toString().toLongOrNull()
+        val money = binding.vMoneyCategory.text.toString().toDoubleOrNull()
 
         if (name == null || money == null) {
             showError(getString(R.string.invalidate_fields))

@@ -15,10 +15,7 @@ import dizel.budget_control.budget.domain.Budget
 import dizel.budget_control.budget.view.budget_list.BudgetListFragment
 import dizel.budget_control.budget.view.create_category.CreateCategoryFragment
 import dizel.budget_control.databinding.FragmentBudgetDetailsBinding
-import dizel.budget_control.utils.MissingDataException
-import dizel.budget_control.utils.ResultRequest
-import dizel.budget_control.utils.replaceFragment
-import dizel.budget_control.utils.startFragment
+import dizel.budget_control.utils.*
 import lecho.lib.hellocharts.model.PieChartData
 import lecho.lib.hellocharts.model.SliceValue
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -84,7 +81,9 @@ class BudgetDetailsFragment: Fragment(R.layout.fragment_budget_details) {
     private fun setUpBudgetDetails(budget: Budget) {
         with(binding) {
             vNameBudget.text = budget.title
-            vTotalSumBudget.text = getString(R.string.total, budget.sum.toString())
+
+            val total = budget.sum.toMoneyMask(budget.currency)
+            vTotalSumBudget.text = getString(R.string.total, total)
 
             vChart.pieChartData = PieChartData().apply {
                 values = budget.categoryList.map {

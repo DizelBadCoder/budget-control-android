@@ -57,7 +57,7 @@ class CreateBudgetUseCase(
 
     data class Params(
         val title: String,
-        val money: Long,
+        val money: Double,
         val currency: Currency
     )
 }

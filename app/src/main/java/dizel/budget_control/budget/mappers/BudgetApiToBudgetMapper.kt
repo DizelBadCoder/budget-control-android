@@ -14,7 +14,7 @@ class BudgetApiToBudgetMapper(
                 title = it.title ?: throw MissingDataException(),
                 categoryList = mapCategoryList(categoryList),
                 currency = Currency.valueOf(it.currency.orEmpty()),
-                sum = it.sum ?: 0
+                sum = it.sum?.toDoubleOrNull() ?: throw MissingDataException()
             )
     }
 
@@ -22,7 +22,7 @@ class BudgetApiToBudgetMapper(
         categoryList.map {
             Category(
                 id = it.id ?: throw MissingDataException(),
-                money = it.money ?: 0,
+                money = it.money?.toDoubleOrNull() ?: throw MissingDataException(),
                 name = it.name ?: "Empty name",
                 currency = Currency.valueOf(it.currency.orEmpty()),
                 color = it.color ?: "#FFFFFF"

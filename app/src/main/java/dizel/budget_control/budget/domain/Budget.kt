@@ -2,7 +2,7 @@ package dizel.budget_control.budget.domain
 
 data class Budget(
     val id: String,
-    val sum: Long,
+    val sum: Double,
     val categoryList: List<Category>,
     val currency: Currency,
     val title: String
@@ -11,7 +11,7 @@ data class Budget(
 data class Category(
     val id: String,
     val name: String,
-    val money: Long,
+    val money: Double,
     val currency: Currency,
     val color: String
 ) {
@@ -21,7 +21,10 @@ data class Category(
     }
 }
 
-enum class Currency(val symbol: String) {
-    RUB("₽"),
-    USD("$")
+enum class Currency (
+    val symbol: String,
+    val cost: Double
+) {
+    RUB("₽", 1.0),
+    USD("$", 74.0)
 }

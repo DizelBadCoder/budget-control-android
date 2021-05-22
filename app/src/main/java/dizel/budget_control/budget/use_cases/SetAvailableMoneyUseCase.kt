@@ -25,10 +25,10 @@ class SetAvailableMoneyUseCase(
 
             val sumCategoryList = categoryApiList
                 .filterNot { it.id.orEmpty() == Category.AVAILABLE_MONEY_KEY }
-                .map { it.money ?: 0 }
+                .map { it.money?.toDoubleOrNull() ?: 0.0 }
                 .sum()
 
-            val availableMoney = (budgetApi.sum ?: 0) - sumCategoryList
+            val availableMoney = (budgetApi.sum?.toDoubleOrNull() ?: 0.0) - sumCategoryList
 
             val reference = snapshot
                 .child("category")

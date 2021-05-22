@@ -33,7 +33,7 @@ class CreateBudgetViewModel(
 
     data class NewBudgetParams(
         val title: String,
-        val money: Long,
+        val money: Double,
         val currency: Currency
     )
 }

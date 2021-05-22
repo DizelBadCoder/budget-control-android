@@ -44,7 +44,7 @@ class CreateBudgetFragment: Fragment(R.layout.fragment_create_budget) {
 
     private fun createBudget() {
         val title = binding.vNameBudget.text.toString().ifEmpty { null }
-        val money = binding.vMoneyBudget.text.toString().toLongOrNull()
+        val money = binding.vMoneyBudget.text.toString().toDoubleOrNull()
 
         if (title == null || money == null) {
             showError(getString(R.string.invalidate_fields))
