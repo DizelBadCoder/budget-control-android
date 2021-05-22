@@ -1,10 +1,9 @@
-package dizel.budget_control.budget.repository.use_cases
+package dizel.budget_control.budget.use_cases
 
 import dizel.budget_control.budget.domain.Category
 import dizel.budget_control.budget.domain.Currency
 import dizel.budget_control.budget.mappers.CategoryToHashMapMapper
 import dizel.budget_control.utils.DatabaseHelper
-import dizel.budget_control.utils.MissingDataException
 import dizel.budget_control.utils.ResultRequest
 import dizel.budget_control.utils.generateKey
 
@@ -24,10 +23,21 @@ class CreateCategoryUseCase(
                 name = params.title,
                 money = params.money,
                 currency = params.currency,
-                color = String.format("#%06X", (0xFFFFFF and params.color))
+                color = String.format("#%06X", (0xFFFFFF and params.color)) // convert int to hex
             )
 
             val categoryMap = CategoryToHashMapMapper.map(category)
+
+            val availableMoney = budget
+                ?.child("category")
+                ?.child(Category.AVAILABLE_MONEY_KEY)
+                ?.child("categoryMoney")
+                ?.getValue(Long::class.java) ?: 0L
+
+            if (availableMoney < category.money) {
+                val ex = IllegalArgumentException("Category budget exceeds available funds")
+                return ResultRequest.Error(ex)
+            }
 
             budget
                 ?.child("category")

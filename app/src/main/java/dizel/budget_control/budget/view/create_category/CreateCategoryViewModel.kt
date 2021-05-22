@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dizel.budget_control.budget.domain.Currency
-import dizel.budget_control.budget.repository.use_cases.CreateCategoryUseCase
+import dizel.budget_control.budget.use_cases.CreateCategoryUseCase
 import dizel.budget_control.utils.ResultRequest
 import kotlinx.coroutines.launch
 

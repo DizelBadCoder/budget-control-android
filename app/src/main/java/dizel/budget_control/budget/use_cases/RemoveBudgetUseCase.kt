@@ -1,4 +1,4 @@
-package dizel.budget_control.budget.repository.use_cases
+package dizel.budget_control.budget.use_cases
 
 import dizel.budget_control.utils.DatabaseHelper
 import dizel.budget_control.utils.ResultRequest

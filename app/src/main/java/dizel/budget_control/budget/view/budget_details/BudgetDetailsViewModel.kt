@@ -5,9 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dizel.budget_control.budget.domain.Budget
 import dizel.budget_control.budget.repository.BudgetRepository
-import dizel.budget_control.budget.repository.use_cases.CreateCategoryUseCase
-import dizel.budget_control.budget.repository.use_cases.RemoveBudgetUseCase
-import dizel.budget_control.budget.repository.use_cases.RemoveCategoryUseCase
+import dizel.budget_control.budget.use_cases.RemoveBudgetUseCase
+import dizel.budget_control.budget.use_cases.RemoveCategoryUseCase
 import dizel.budget_control.utils.MissingDataException
 import dizel.budget_control.utils.ResultRequest
 import dizel.budget_control.utils.asLiveData
@@ -52,6 +51,7 @@ class BudgetDetailsViewModel(
 
         return data
     }
+
 
     fun retry() {
         budgetId?.let { loadBudgetById(it) }
