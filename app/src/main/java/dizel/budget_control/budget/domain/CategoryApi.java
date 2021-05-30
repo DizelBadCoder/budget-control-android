@@ -23,10 +23,8 @@ public class CategoryApi {
 
     @PropertyName("categoryMoney")
     public void setMoney(Object money) {
-        if (money instanceof Double) {
-            this.money = ((Double)money).toString();
-        } else if (money instanceof Long) {
-            this.money = ((Long)money).toString();
+        if (money instanceof Double || money instanceof Long) {
+            this.money = money.toString();
         } else {
             this.money = null;
         }

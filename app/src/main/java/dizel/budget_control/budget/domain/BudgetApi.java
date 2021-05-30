@@ -17,10 +17,8 @@ public class BudgetApi {
 
     @PropertyName("budgetSum")
     public void setSum(Object sum) {
-        if (sum instanceof Double) {
-            this.sum = ((Double)sum).toString();
-        } else if ( sum instanceof Long) {
-            this.sum = ((Long)sum).toString();
+        if (sum instanceof Double || sum instanceof Long) {
+            this.sum = sum.toString();
         } else {
             this.sum = null;
         }
