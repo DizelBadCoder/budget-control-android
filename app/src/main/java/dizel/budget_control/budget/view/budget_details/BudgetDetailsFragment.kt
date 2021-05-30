@@ -1,14 +1,15 @@
 package dizel.budget_control.budget.view.budget_details
 
+import android.content.DialogInterface
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import dizel.budget_control.R
 import dizel.budget_control.budget.domain.Budget
@@ -111,10 +112,29 @@ class BudgetDetailsFragment: Fragment(R.layout.fragment_budget_details) {
             setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.menu_delete_budget -> askToDeleteBudget()
+                    R.id.menu_rename_budget -> askToRenameBudget()
                 }
                 true
             }
         }
+    }
+
+    private fun askToRenameBudget() {
+        val dialog = AlertDialog.Builder(requireContext())
+            .setTitle(R.string.rename_budget)
+            .setView(R.layout.dialog_rename_budget)
+            .create()
+
+        dialog.setButton(DialogInterface.BUTTON_POSITIVE, "Yes") { _, _ ->
+            val text = dialog.findViewById<EditText>(R.id.vEditText)?.text.toString()
+            renameThisBudget(text)
+        }
+
+        dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "No") { _, _ ->
+            dialog.dismiss()
+        }
+
+        dialog.show()
     }
 
     private fun askToDeleteBudget() {
@@ -135,6 +155,22 @@ class BudgetDetailsFragment: Fragment(R.layout.fragment_budget_details) {
                 }
                 is ResultRequest.Error -> {
                     Timber.e(it.exception)
+                    Toast.makeText(context, it.exception.message, Toast.LENGTH_LONG).show()
+                }
+                is ResultRequest.Loading -> { }
+            }
+        }
+    }
+
+    private fun renameThisBudget(text: String) {
+        viewModel.renameBudget(text).observe(viewLifecycleOwner) {
+            when (it) {
+                is ResultRequest.Success -> {
+                    viewModel.retry()
+                }
+                is ResultRequest.Error -> {
+                    Timber.e(it.exception)
+                    Toast.makeText(context, it.exception.message, Toast.LENGTH_LONG).show()
                 }
                 is ResultRequest.Loading -> { }
             }

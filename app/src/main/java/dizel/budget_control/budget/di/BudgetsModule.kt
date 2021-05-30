@@ -23,7 +23,7 @@ val budgetsModule = module {
     single<BudgetRepository> { BudgetRepositoryImpl(get()) }
 
     viewModel { BudgetListViewModel(get()) }
-    viewModel { BudgetDetailsViewModel(get(), get(), get()) }
+    viewModel { BudgetDetailsViewModel(get(), get(), get(), get()) }
     viewModel { CreateBudgetViewModel(get()) }
     viewModel { CreateCategoryViewModel(get()) }
 
@@ -31,5 +31,6 @@ val budgetsModule = module {
     factory { RemoveBudgetUseCase(get()) }
     factory { CreateCategoryUseCase(get(), get()) }
     factory { RemoveCategoryUseCase(get(), get()) }
+    factory { RenameBudgetUseCase(get()) }
     factory { SetAvailableMoneyUseCase(get()) }
 }
