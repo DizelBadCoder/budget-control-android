@@ -8,8 +8,9 @@ Enter calculation and conduct analysis.
 Add and change your budgets.
 Also monitor expense categories.
 
-### Web version
-[Web version](https://denllay.github.io/Budget-Control/) [[Source](https://github.com/Denllay/Budget-Control)]
+### Links
+* [Google Play Market](https://play.google.com/store/apps/details?id=dizel.budget_control)
+* [Web version](https://denllay.github.io/Budget-Control/) [[Source](https://github.com/Denllay/Budget-Control)]
 
 ### Basic information about the application
 * Minimum support version - 5.0 (21 API)
