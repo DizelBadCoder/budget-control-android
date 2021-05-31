@@ -8,6 +8,8 @@ Enter calculation and conduct analysis.
 Add and change your budgets.
 Also monitor expense categories.
 
+![budget-control](https://repository-images.githubusercontent.com/362858239/978b3b80-c262-11eb-93ac-02ea773e9b8f)
+
 ### Links
 * [Google Play Market](https://play.google.com/store/apps/details?id=dizel.budget_control)
 * [Web version](https://denllay.github.io/Budget-Control/) [[Source](https://github.com/Denllay/Budget-Control)]
@@ -27,3 +29,6 @@ Also monitor expense categories.
 
 ### Plugins used
 * [DeployGate](https://deploygate.com/) - deploy app for testing
+
+### Screenshots
+![screenshots](https://i.imgur.com/HEXA8Nq.png)
