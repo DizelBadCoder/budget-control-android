@@ -7,7 +7,6 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -20,7 +19,6 @@ import dizel.budget_control.utils.*
 import lecho.lib.hellocharts.model.PieChartData
 import lecho.lib.hellocharts.model.SliceValue
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 class BudgetDetailsFragment: Fragment(R.layout.fragment_budget_details) {
     private var _binding: FragmentBudgetDetailsBinding? = null
@@ -46,18 +44,9 @@ class BudgetDetailsFragment: Fragment(R.layout.fragment_budget_details) {
     }
 
     private fun subscribeUi() {
-        viewModel.budget.observe(viewLifecycleOwner) { result ->
-            when (result) {
-                is ResultRequest.Success -> {
-                    setUpBudgetDetails(result.data)
-                    hideLoadingBar()
-                }
-                is ResultRequest.Error -> {
-                    Timber.e(result.exception)
-                    hideLoadingBar()
-                }
-                is ResultRequest.Loading -> { }
-            }
+        viewModel.budget.observe(viewLifecycleOwner) { budget ->
+            setUpBudgetDetails(budget)
+            hideLoadingBar()
         }
     }
 
@@ -75,7 +64,7 @@ class BudgetDetailsFragment: Fragment(R.layout.fragment_budget_details) {
     }
 
     private fun setUpAdapters() {
-        categoryAdapter = CategoryListAdapter()
+        categoryAdapter = CategoryListAdapter(viewModel)
         binding.vCategoryList.adapter = categoryAdapter
     }
 
@@ -120,21 +109,20 @@ class BudgetDetailsFragment: Fragment(R.layout.fragment_budget_details) {
     }
 
     private fun askToRenameBudget() {
-        val dialog = AlertDialog.Builder(requireContext())
+        AlertDialog.Builder(requireContext())
             .setTitle(R.string.rename_budget)
             .setView(R.layout.dialog_rename_budget)
             .create()
+            .apply {
+                setButton(DialogInterface.BUTTON_POSITIVE, "Yes") { _, _ ->
+                    val text = findViewById<EditText>(R.id.vEditText)?.text.toString()
+                    viewModel.renameBudget(text)
+                }
 
-        dialog.setButton(DialogInterface.BUTTON_POSITIVE, "Yes") { _, _ ->
-            val text = dialog.findViewById<EditText>(R.id.vEditText)?.text.toString()
-            renameThisBudget(text)
-        }
+                setButton(DialogInterface.BUTTON_NEGATIVE, "No") { _, _ -> dismiss() }
 
-        dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "No") { _, _ ->
-            dialog.dismiss()
-        }
-
-        dialog.show()
+                show()
+            }
     }
 
     private fun askToDeleteBudget() {
@@ -153,26 +141,7 @@ class BudgetDetailsFragment: Fragment(R.layout.fragment_budget_details) {
                     val fragment = BudgetListFragment()
                     replaceFragment(fragment)
                 }
-                is ResultRequest.Error -> {
-                    Timber.e(it.exception)
-                    Toast.makeText(context, it.exception.message, Toast.LENGTH_LONG).show()
-                }
-                is ResultRequest.Loading -> { }
-            }
-        }
-    }
-
-    private fun renameThisBudget(text: String) {
-        viewModel.renameBudget(text).observe(viewLifecycleOwner) {
-            when (it) {
-                is ResultRequest.Success -> {
-                    viewModel.retry()
-                }
-                is ResultRequest.Error -> {
-                    Timber.e(it.exception)
-                    Toast.makeText(context, it.exception.message, Toast.LENGTH_LONG).show()
-                }
-                is ResultRequest.Loading -> { }
+                else -> { }
             }
         }
     }
@@ -193,7 +162,6 @@ class BudgetDetailsFragment: Fragment(R.layout.fragment_budget_details) {
 
     companion object {
         const val BUDGET_KEY_DETAILS = "budget_key_details"
-        const val FRAGMENT_NAME = "BudgetDetailsFragment"
 
         fun newInstance(budgetId: String): Fragment =
             BudgetDetailsFragment().apply {

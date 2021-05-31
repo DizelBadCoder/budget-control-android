@@ -12,8 +12,9 @@ import dizel.budget_control.budget.domain.Category
 import dizel.budget_control.databinding.ItemCategoryBinding
 import dizel.budget_control.utils.toMoneyMask
 
-class CategoryListAdapter:
-        ListAdapter<Category, CategoryListAdapter.CategoryViewHolder>(CategoryDiffUtil()) {
+class CategoryListAdapter(
+   private val viewModel: BudgetDetailsViewModel
+): ListAdapter<Category, CategoryListAdapter.CategoryViewHolder>(CategoryDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -31,11 +32,14 @@ class CategoryListAdapter:
     inner class CategoryViewHolder(
             private val binding: ItemCategoryBinding
     ): RecyclerView.ViewHolder(binding.root) {
-        @SuppressLint("SetTextI18n")
         fun bind(category: Category) = with (binding) {
             vCategoryName.text = category.name
             vCategoryMoney.text = category.money.toMoneyMask(category.currency)
             vCategoryColor.setBackgroundColor(Color.parseColor(category.color))
+
+            vDeleteCategoryButton.setOnClickListener {
+                viewModel.removeCategory(category.id)
+            }
         }
     }
 }
