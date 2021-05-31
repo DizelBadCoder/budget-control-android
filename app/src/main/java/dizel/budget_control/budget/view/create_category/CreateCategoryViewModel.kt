@@ -1,32 +1,30 @@
 package dizel.budget_control.budget.view.create_category
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import dizel.budget_control.budget.domain.Currency
 import dizel.budget_control.budget.use_cases.CreateCategoryUseCase
+import dizel.budget_control.utils.BaseViewModel
 import dizel.budget_control.utils.ResultRequest
-import kotlinx.coroutines.launch
 
 class CreateCategoryViewModel(
     private val createCategoryUseCase: CreateCategoryUseCase
-): ViewModel() {
+): BaseViewModel() {
 
     fun createCategory(params: Params): MutableLiveData<ResultRequest<Unit>> {
         val data = MutableLiveData<ResultRequest<Unit>>()
         data.value = ResultRequest.Loading
 
-        viewModelScope.launch {
-            data.value = createCategoryUseCase.execute(
-                CreateCategoryUseCase.Params(
-                    title = params.title,
-                    color = params.color,
-                    currency = params.currency,
-                    money = params.money,
-                    budgetId = params.budgetId
-                )
-            )
-        }
+        val paramsUseCase = CreateCategoryUseCase.Params(
+            title = params.title,
+            color = params.color,
+            currency = params.currency,
+            money = params.money,
+            budgetId = params.budgetId
+        )
+        makeRequest(
+            { createCategoryUseCase.execute(paramsUseCase) },
+            { data.value = ResultRequest.Success(Unit) }
+        )
         return data
     }
 

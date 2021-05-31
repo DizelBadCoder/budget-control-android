@@ -7,18 +7,14 @@ import android.view.View
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.asLiveData
 import dizel.budget_control.R
 import dizel.budget_control.budget.domain.Currency
-import dizel.budget_control.budget.view.budget_details.BudgetDetailsFragment
-import dizel.budget_control.budget.view.create_budget.CreateBudgetViewModel
 import dizel.budget_control.custom.ColorPicker
 import dizel.budget_control.databinding.FragmentCreateCategoryBinding
-import dizel.budget_control.utils.MissingDataException
 import dizel.budget_control.utils.ResultRequest
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 class CreateCategoryFragment : Fragment(R.layout.fragment_create_category) {
 
@@ -45,6 +41,7 @@ class CreateCategoryFragment : Fragment(R.layout.fragment_create_category) {
         }
         setUpToolbar()
         setUpBudgetIdFromArgument()
+        subscribeErrorFlow()
     }
 
     private fun createCategory() {
@@ -70,11 +67,14 @@ class CreateCategoryFragment : Fragment(R.layout.fragment_create_category) {
                 is ResultRequest.Success -> {
                     parentFragmentManager.popBackStack()
                 }
-                is ResultRequest.Error -> {
-                    showError(it.exception.message ?: getString(R.string.unknown_error))
-                }
-                is ResultRequest.Loading -> {  }
+                else -> {}
             }
+        }
+    }
+
+    private fun subscribeErrorFlow() {
+        viewModel.errorFlow.asLiveData().observe(viewLifecycleOwner) {
+            showError(it.message ?: getString(R.string.unknown_error))
         }
     }
 
@@ -110,7 +110,6 @@ class CreateCategoryFragment : Fragment(R.layout.fragment_create_category) {
     }
 
     companion object {
-        const val FRAGMENT_NAME = "CreateCategoryFragment"
         const val BUDGET_ID_KEY = "Budget_id_key"
 
         fun newInstance(budgetId: String): Fragment =
