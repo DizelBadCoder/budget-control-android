@@ -1,9 +1,9 @@
 package dizel.budget_control.budget.view.budget_details
 
-import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -36,6 +36,10 @@ class CategoryListAdapter(
             vCategoryName.text = category.name
             vCategoryMoney.text = category.money.toMoneyMask(category.currency)
             vCategoryColor.setBackgroundColor(Color.parseColor(category.color))
+
+            if (category.id == Category.AVAILABLE_MONEY_KEY) {
+                vDeleteCategoryButton.isVisible = false
+            }
 
             vDeleteCategoryButton.setOnClickListener {
                 viewModel.removeCategory(category.id)
