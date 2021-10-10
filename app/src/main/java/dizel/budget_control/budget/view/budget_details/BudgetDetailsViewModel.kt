@@ -1,14 +1,14 @@
 package dizel.budget_control.budget.view.budget_details
 
 import androidx.lifecycle.MutableLiveData
-import dizel.budget_control.budget.domain.Budget
-import dizel.budget_control.budget.repository.BudgetRepository
-import dizel.budget_control.budget.use_cases.RemoveBudgetUseCase
-import dizel.budget_control.budget.use_cases.RemoveCategoryUseCase
-import dizel.budget_control.budget.use_cases.RenameBudgetUseCase
-import dizel.budget_control.utils.BaseViewModel
-import dizel.budget_control.utils.ResultRequest
-import dizel.budget_control.utils.asLiveData
+import dizel.budget_control.budget.domain.entity.Budget
+import dizel.budget_control.budget.domain.repository.BudgetRepository
+import dizel.budget_control.budget.domain.use_cases.RemoveBudgetUseCase
+import dizel.budget_control.budget.domain.use_cases.RemoveCategoryUseCase
+import dizel.budget_control.budget.domain.use_cases.RenameBudgetUseCase
+import dizel.budget_control.core.utils.BaseViewModel
+import dizel.budget_control.core.utils.ResultRequest
+import dizel.budget_control.core.extensions.asLiveData
 
 class BudgetDetailsViewModel(
     private val budgetRepository: BudgetRepository,

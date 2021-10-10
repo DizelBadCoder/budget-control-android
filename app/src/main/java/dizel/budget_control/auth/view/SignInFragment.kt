@@ -11,8 +11,8 @@ import com.google.firebase.auth.FirebaseAuth
 import dizel.budget_control.budget.view.MainActivity
 import dizel.budget_control.R
 import dizel.budget_control.databinding.FragmentSingInBinding
-import dizel.budget_control.utils.isValidEmail
-import dizel.budget_control.utils.isValidPassword
+import dizel.budget_control.core.tools.isValidEmail
+import dizel.budget_control.core.tools.isValidPassword
 
 class SignInFragment: Fragment(R.layout.fragment_sing_in) {
     private var _binding: FragmentSingInBinding? = null

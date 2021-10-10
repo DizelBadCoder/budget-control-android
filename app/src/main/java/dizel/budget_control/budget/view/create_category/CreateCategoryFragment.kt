@@ -10,10 +10,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.asLiveData
 import dizel.budget_control.R
-import dizel.budget_control.budget.domain.Currency
-import dizel.budget_control.custom.ColorPicker
+import dizel.budget_control.budget.domain.entity.Currency
+import dizel.budget_control.core.view.ColorPicker
 import dizel.budget_control.databinding.FragmentCreateCategoryBinding
-import dizel.budget_control.utils.ResultRequest
+import dizel.budget_control.core.utils.ResultRequest
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CreateCategoryFragment : Fragment(R.layout.fragment_create_category) {

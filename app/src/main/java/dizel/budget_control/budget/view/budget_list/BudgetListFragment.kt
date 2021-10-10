@@ -14,9 +14,9 @@ import dizel.budget_control.R
 import dizel.budget_control.auth.view.AuthActivity
 import dizel.budget_control.budget.view.budget_details.BudgetDetailsFragment
 import dizel.budget_control.budget.view.create_budget.CreateBudgetFragment
-import dizel.budget_control.utils.ResultRequest
+import dizel.budget_control.core.utils.ResultRequest
 import dizel.budget_control.databinding.FragmentListBudgetBinding
-import dizel.budget_control.utils.startFragment
+import dizel.budget_control.core.utils.startFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 

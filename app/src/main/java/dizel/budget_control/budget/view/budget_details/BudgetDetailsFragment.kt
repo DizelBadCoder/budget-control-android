@@ -11,11 +11,12 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import dizel.budget_control.R
-import dizel.budget_control.budget.domain.Budget
+import dizel.budget_control.budget.domain.entity.Budget
 import dizel.budget_control.budget.view.budget_list.BudgetListFragment
 import dizel.budget_control.budget.view.create_category.CreateCategoryFragment
+import dizel.budget_control.core.extensions.toMoneyMask
 import dizel.budget_control.databinding.FragmentBudgetDetailsBinding
-import dizel.budget_control.utils.*
+import dizel.budget_control.core.utils.*
 import lecho.lib.hellocharts.model.PieChartData
 import lecho.lib.hellocharts.model.SliceValue
 import org.koin.androidx.viewmodel.ext.android.viewModel

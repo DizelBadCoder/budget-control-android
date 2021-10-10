@@ -8,10 +8,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import dizel.budget_control.R
-import dizel.budget_control.budget.domain.Budget
-import dizel.budget_control.budget.domain.Category
+import dizel.budget_control.budget.domain.entity.Budget
+import dizel.budget_control.budget.domain.entity.Category
 import dizel.budget_control.databinding.ViewBudgetBinding
-import dizel.budget_control.utils.toMoneyMask
+import dizel.budget_control.core.extensions.toMoneyMask
 import lecho.lib.hellocharts.model.PieChartData
 import lecho.lib.hellocharts.model.SliceValue
 

@@ -5,7 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import dizel.budget_control.R
 import dizel.budget_control.databinding.FragmentSplashAuthBinding
-import dizel.budget_control.utils.startFragment
+import dizel.budget_control.core.utils.startFragment
 
 class SplashAuthFragment: Fragment(R.layout.fragment_splash_auth) {
 

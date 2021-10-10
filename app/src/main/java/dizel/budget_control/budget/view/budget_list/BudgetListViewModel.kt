@@ -3,10 +3,10 @@ package dizel.budget_control.budget.view.budget_list
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dizel.budget_control.budget.domain.Budget
-import dizel.budget_control.budget.repository.BudgetRepository
-import dizel.budget_control.utils.ResultRequest
-import dizel.budget_control.utils.asLiveData
+import dizel.budget_control.budget.domain.entity.Budget
+import dizel.budget_control.budget.domain.repository.BudgetRepository
+import dizel.budget_control.core.utils.ResultRequest
+import dizel.budget_control.core.extensions.asLiveData
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch

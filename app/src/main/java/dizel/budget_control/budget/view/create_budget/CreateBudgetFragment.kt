@@ -7,11 +7,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import dizel.budget_control.R
-import dizel.budget_control.budget.domain.Currency
+import dizel.budget_control.budget.domain.entity.Currency
 import dizel.budget_control.budget.view.budget_details.BudgetDetailsFragment
 import dizel.budget_control.budget.view.budget_list.BudgetListFragment
 import dizel.budget_control.databinding.FragmentCreateBudgetBinding
-import dizel.budget_control.utils.*
+import dizel.budget_control.core.utils.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CreateBudgetFragment: Fragment(R.layout.fragment_create_budget) {

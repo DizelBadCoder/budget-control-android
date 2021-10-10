@@ -1,13 +1,10 @@
 package dizel.budget_control.budget.view
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.auth.FirebaseAuth
 import dizel.budget_control.R
-import dizel.budget_control.auth.view.AuthActivity
 import dizel.budget_control.budget.view.budget_list.BudgetListFragment
-import dizel.budget_control.utils.replaceFragment
+import dizel.budget_control.core.utils.replaceFragment
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 

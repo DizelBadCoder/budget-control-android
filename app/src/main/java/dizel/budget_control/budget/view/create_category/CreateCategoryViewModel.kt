@@ -1,10 +1,10 @@
 package dizel.budget_control.budget.view.create_category
 
 import androidx.lifecycle.MutableLiveData
-import dizel.budget_control.budget.domain.Currency
-import dizel.budget_control.budget.use_cases.CreateCategoryUseCase
-import dizel.budget_control.utils.BaseViewModel
-import dizel.budget_control.utils.ResultRequest
+import dizel.budget_control.budget.domain.entity.Currency
+import dizel.budget_control.budget.domain.use_cases.CreateCategoryUseCase
+import dizel.budget_control.core.utils.BaseViewModel
+import dizel.budget_control.core.utils.ResultRequest
 
 class CreateCategoryViewModel(
     private val createCategoryUseCase: CreateCategoryUseCase
