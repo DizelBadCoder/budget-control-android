@@ -20,27 +20,30 @@ import dizel.budget_control.core.utils.startFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
-class BudgetListFragment: Fragment(R.layout.fragment_list_budget) {
-    private var _binding: FragmentListBudgetBinding? = null
-    private val binding get() = _binding!!
-    private val viewModel by viewModel<BudgetListViewModel>()
+@Composable
+fun BudgetListScreen(
+    viewModel: BudgetListViewModel = viewModel(),
+    navigateToCreateBudget: () -> Unit,
+    navigateToBudgetDetails: (String) -> Unit
+) {
+    val budgetList by viewModel.budgetList.collectAsState(initial = ResultRequest.Loading)
 
-    private var budgetListAdapter: BudgetListAdapter? = null
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        _binding = FragmentListBudgetBinding.bind(view).apply {
-            vFloatingButton.setOnClickListener { navigateToCreateBudget() }
-            vStubButton.setOnClickListener { navigateToCreateBudget() }
-            vSwipeRefresher.setOnRefreshListener { viewModel.loadBudgetList() }
+    Scaffold(
+        topBar = { BudgetListTopBar(onLogoutClick = viewModel::signOut) },
+        floatingActionButton = { BudgetListFloatingActionButton(onClick = navigateToCreateBudget) }
+    ) {
+        SwipeRefresh(
+            state = rememberSwipeRefreshState(isRefreshing = budgetList is ResultRequest.Loading),
+            onRefresh = viewModel::loadBudgetList
+        ) {
+            when (val result = budgetList) {
+                is ResultRequest.Success -> BudgetList(result.data, navigateToBudgetDetails)
+                is ResultRequest.Error -> ErrorStub(result.exception)
+                is ResultRequest.Loading -> LoadingState()
+            }
         }
-
-        setHasOptionsMenu(true)
-
-        setUpToolbar()
-        setUpAdapter()
-        subscribeUI()
     }
+}
 
     private fun subscribeUI() {
         viewModel.budgetList.observe(viewLifecycleOwner) { result ->
@@ -104,29 +107,11 @@ class BudgetListFragment: Fragment(R.layout.fragment_list_budget) {
         binding.vLoadingProgressBar.isVisible = false
     }
 
-    private fun setUpAdapter() {
-        budgetListAdapter = BudgetListAdapter(viewModel)
-        binding.vRecyclerView.adapter = budgetListAdapter
-    }
+    // No equivalent in Compose, as the adapter is replaced with a LazyColumn in the BudgetList Composable.
 
-    private fun setUpToolbar() {
-        with (binding.vToolBar) {
-            (requireActivity() as AppCompatActivity).setSupportActionBar(this)
-            setOnMenuItemClickListener {
-                when (it.itemId) {
-                    R.id.menu_logout -> singOut()
-                }
-                true
-            }
-        }
-    }
+    // No equivalent in Compose, as the Toolbar is replaced with a TopAppBar in the BudgetListScreen Composable.
 
-    private fun singOut() {
-        FirebaseAuth.getInstance().signOut()
-
-        startActivity(Intent(context, AuthActivity::class.java))
-        (requireActivity() as AppCompatActivity).finish()
-    }
+    // No equivalent in Compose, as the sign out logic is moved to the BudgetListTopBar Composable.
 
     override fun onResume() {
         super.onResume()
