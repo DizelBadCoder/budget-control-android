@@ -14,32 +14,57 @@ import dizel.budget_control.databinding.FragmentCreateBudgetBinding
 import dizel.budget_control.core.utils.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CreateBudgetFragment: Fragment(R.layout.fragment_create_budget) {
-    private var _binding: FragmentCreateBudgetBinding? = null
-    private val binding get() = _binding!!
+@Composable
+fun CreateBudgetScreen(viewModel: CreateBudgetViewModel = viewModel()) {
+    val scaffoldState = rememberScaffoldState()
+    val context = LocalContext.current
+    val currencyItems = Currency.values().map { "${it.name} - ${it.symbol}" }
+    var selectedCurrency by remember { mutableStateOf(currencyItems.first()) }
+    var title by remember { mutableStateOf("") }
+    var money by remember { mutableStateOf("") }
 
-    private val viewModel by viewModel<CreateBudgetViewModel>()
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        _binding = FragmentCreateBudgetBinding.bind(view).apply {
-            vSubmitButton.setOnClickListener { createBudget() }
-
-            val adapter = ArrayAdapter(
-                view.context,
-                android.R.layout.simple_spinner_dropdown_item,
-                Currency.values().map { "${it.name} - ${it.symbol}" }
+    Scaffold(
+        scaffoldState = scaffoldState,
+        topBar = {
+            TopAppBar(
+                title = { Text(text = stringResource(id = R.string.create_budget)) },
+                navigationIcon = {
+                    IconButton(onClick = { findNavController().popBackStack() }) {
+                        Icon(Icons.Filled.ArrowBack, contentDescription = null)
+                    }
+                }
             )
-            vSpinnerCurrency.adapter = adapter
         }
-
-        setUpToolbar()
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            TextField(
+                value = title,
+                onValueChange = { title = it },
+                label = { Text(stringResource(id = R.string.title)) }
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            TextField(
+                value = money,
+                onValueChange = { money = it },
+                label = { Text(stringResource(id = R.string.money)) },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            DropdownMenu(
+                items = currencyItems,
+                selectedItem = selectedCurrency,
+                onItemSelected = { selectedCurrency = it }
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Button(onClick = { createBudget(title, money, selectedCurrency, viewModel, context, scaffoldState) }) {
+                Text(text = stringResource(id = R.string.submit))
+            }
+        }
     }
+}
 
-    private fun navigateToBudgetDetails(id: String) {
-        val fragment = BudgetDetailsFragment.newInstance(id)
-        parentFragmentManager.popBackStack()
-        startFragment(fragment, BudgetListFragment.FRAGMENT_NAME)
+    fun navigateToBudgetDetails(navController: NavController, id: String) {
+        navController.navigate("budgetDetails/$id")
     }
 
     private fun createBudget() {
@@ -76,11 +101,19 @@ class CreateBudgetFragment: Fragment(R.layout.fragment_create_budget) {
         }
     }
 
-    private fun showError(mes: String) {
-        AlertDialog.Builder(requireContext())
-            .setTitle(R.string.error_stub_title)
-            .setMessage(mes)
-            .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
-            .show()
+    @Composable
+    fun ErrorDialog(message: String, openDialog: MutableState<Boolean>) {
+        if (openDialog.value) {
+            AlertDialog(
+                onDismissRequest = { openDialog.value = false },
+                title = { Text(text = stringResource(id = R.string.error_stub_title)) },
+                text = { Text(text = message) },
+                confirmButton = {
+                    Button(onClick = { openDialog.value = false }) {
+                        Text(text = stringResource(id = R.string.ok))
+                    }
+                }
+            )
+        }
     }
 }
