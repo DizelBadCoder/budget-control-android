@@ -23,37 +23,38 @@ fun CreateBudgetScreen(viewModel: CreateBudgetViewModel = viewModel()) {
     var title by remember { mutableStateOf("") }
     var money by remember { mutableStateOf("") }
 
-    Scaffold(
+    CreateBudgetScaffold(
         scaffoldState = scaffoldState,
         topBar = {
             CreateBudgetTopBar()
-        }
-    ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-BudgetTextField(
-    value = title,
-    onValueChange = { title = it },
-    label = { Text(stringResource(id = R.string.title)) }
-)
-            AddSpacer()
-            BudgetTextField(
-                value = money,
-                onValueChange = { money = it },
-                label = { Text(stringResource(id = R.string.money)) },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-            )
-AddSpacer()
-DropdownMenu(
-    items = currencyItems,
-    selectedItem = selectedCurrency,
-    onItemSelected = { selectedCurrency = it }
-)
-AddSpacer()
-Button(onClick = { createBudget(title, money, selectedCurrency, viewModel, context, scaffoldState) }) {
-                Text(text = stringResource(id = R.string.submit))
+        },
+        content = {
+            Column(modifier = Modifier.padding(16.dp)) {
+                BudgetTextField(
+                    value = title,
+                    onValueChange = { title = it },
+                    label = { Text(stringResource(id = R.string.title)) }
+                )
+                AddSpacer()
+                BudgetTextField(
+                    value = money,
+                    onValueChange = { money = it },
+                    label = { Text(stringResource(id = R.string.money)) },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                )
+                AddSpacer()
+                DropdownMenu(
+                    items = currencyItems,
+                    selectedItem = selectedCurrency,
+                    onItemSelected = { selectedCurrency = it }
+                )
+                AddSpacer()
+                Button(onClick = { createBudget(title, money, selectedCurrency, viewModel, context, scaffoldState) }) {
+                    Text(text = stringResource(id = R.string.submit))
+                }
             }
         }
-    }
+    )
 }
 
     fun navigateToBudgetDetails(navController: NavController, id: String) {
@@ -107,6 +108,20 @@ fun ErrorDialog(message: String, openDialog: MutableState<Boolean>) {
                 }
             }
         )
+    }
+}
+
+@Composable
+fun CreateBudgetScaffold(
+    scaffoldState: ScaffoldState,
+    topBar: @Composable () -> Unit,
+    content: @Composable () -> Unit
+) {
+    Scaffold(
+        scaffoldState = scaffoldState,
+        topBar = topBar
+    ) {
+        content()
     }
 }
 }
