@@ -30,26 +30,26 @@ fun CreateBudgetScreen(viewModel: CreateBudgetViewModel = viewModel()) {
         }
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            TextField(
+TextField(
                 value = title,
                 onValueChange = { title = it },
                 label = { Text(stringResource(id = R.string.title)) }
             )
-            Spacer(modifier = Modifier.height(8.dp))
+            AddSpacer()
             TextField(
-                value = money,
-                onValueChange = { money = it },
-                label = { Text(stringResource(id = R.string.money)) },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            DropdownMenu(
-                items = currencyItems,
-                selectedItem = selectedCurrency,
-                onItemSelected = { selectedCurrency = it }
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Button(onClick = { createBudget(title, money, selectedCurrency, viewModel, context, scaffoldState) }) {
+    value = money,
+    onValueChange = { money = it },
+    label = { Text(stringResource(id = R.string.money)) },
+    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+)
+AddSpacer()
+DropdownMenu(
+    items = currencyItems,
+    selectedItem = selectedCurrency,
+    onItemSelected = { selectedCurrency = it }
+)
+AddSpacer()
+Button(onClick = { createBudget(title, money, selectedCurrency, viewModel, context, scaffoldState) }) {
                 Text(text = stringResource(id = R.string.submit))
             }
         }
