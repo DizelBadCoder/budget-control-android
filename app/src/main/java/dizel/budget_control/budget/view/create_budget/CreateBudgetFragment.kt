@@ -102,18 +102,18 @@ fun CreateBudgetScreen(viewModel: CreateBudgetViewModel = viewModel()) {
     }
 
     @Composable
-    fun ErrorDialog(message: String, openDialog: MutableState<Int>) {
-        if (openDialog.value == 1) {
-            AlertDialog(
-                onDismissRequest = { openDialog.value = false },
-                title = { Text(text = stringResource(id = R.string.error_stub_title)) },
-                text = { Text(text = message) },
-                confirmButton = {
-                    Button(onClick = { openDialog.value = 0 }) {
-                        Text(text = stringResource(id = R.string.ok))
-                    }
+fun ErrorDialog(message: String, openDialog: MutableState<Boolean>) {
+    if (openDialog.value) {
+        AlertDialog(
+            onDismissRequest = { openDialog.value = false },
+            title = { Text(text = stringResource(id = R.string.error_stub_title)) },
+            text = { Text(text = message) },
+            confirmButton = {
+                Button(onClick = { openDialog.value = false }) {
+                    Text(text = stringResource(id = R.string.ok))
                 }
-            )
-        }
+            }
+        )
     }
+}
 }
