@@ -26,6 +26,26 @@ fun BudgetListScreen(
     navigateToCreateBudget: () -> Unit,
     navigateToBudgetDetails: (MutableList<Char>) -> Unit
 ) {
+    @Composable
+    fun BudgetListScaffold(
+        topBar: @Composable () -> Unit,
+        floatingActionButton: @Composable () -> Unit,
+        swipeRefreshState: SwipeRefreshState,
+        onRefresh: () -> Unit,
+        budgetListContent: @Composable () -> Unit
+    ) {
+        Scaffold(
+            topBar = topBar,
+            floatingActionButton = floatingActionButton
+        ) {
+            SwipeRefresh(
+                state = swipeRefreshState,
+                onRefresh = onRefresh
+            ) {
+                budgetListContent()
+            }
+        }
+    }
 }
 
 @Composable
@@ -41,17 +61,13 @@ fun BudgetListContent(
 }
     val budgetList by viewModel.budgetList.collectAsState(initial = ResultRequest.Loading)
 
-    Scaffold(
+    BudgetListScaffold(
         topBar = { BudgetListTopBar(onLogoutClick = viewModel::signOut) },
-        floatingActionButton = { BudgetListFloatingActionButton(onClick = navigateToCreateBudget) }
-    ) {
-        SwipeRefresh(
-            state = rememberSwipeRefreshState(isRefreshing = budgetList is ResultRequest.Loading),
-            onRefresh = viewModel::loadBudgetList
-        ) {
-            BudgetListContent(budgetList, navigateToBudgetDetails)
-        }
-    }
+        floatingActionButton = { BudgetListFloatingActionButton(onClick = navigateToCreateBudget) },
+        swipeRefreshState = rememberSwipeRefreshState(isRefreshing = budgetList is ResultRequest.Loading),
+        onRefresh = viewModel::loadBudgetList,
+        budgetListContent = { BudgetListContent(budgetList, navigateToBudgetDetails) }
+    )
 }
 
     private fun subscribeUI() {
