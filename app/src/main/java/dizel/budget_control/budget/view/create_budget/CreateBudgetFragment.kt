@@ -43,13 +43,13 @@ fun CreateBudgetScreen(viewModel: CreateBudgetViewModel = viewModel()) {
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                 )
                 AddSpacer()
-                DropdownMenu(
+                BudgetDropdownMenu(
                     items = currencyItems,
                     selectedItem = selectedCurrency,
                     onItemSelected = { selectedCurrency = it }
                 )
                 AddSpacer()
-                Button(onClick = { createBudget(title, money, selectedCurrency, viewModel, context, scaffoldState) }) {
+                BudgetButton(onClick = { createBudget(title, money, selectedCurrency, viewModel, context, scaffoldState) }) {
                     Text(text = stringResource(id = R.string.submit))
                 }
             }
@@ -103,7 +103,7 @@ fun ErrorDialog(message: String, openDialog: MutableState<Boolean>) {
             title = { Text(text = stringResource(id = R.string.error_stub_title)) },
             text = { Text(text = message) },
             confirmButton = {
-                Button(onClick = { openDialog.value = false }) {
+                BudgetButton(onClick = { openDialog.value = false }) {
                     Text(text = stringResource(id = R.string.ok))
                 }
             }
