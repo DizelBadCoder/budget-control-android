@@ -14,20 +14,21 @@ android {
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        class MainActivity : AppCompatActivity() {
+         
+             override fun onCreate(savedInstanceState: Bundle?) {
+                 super.onCreate(savedInstanceState)
+                 setContent {
+                     Button(onClick = { }) {
+                         Text(text = "You are loh")
+                     }
+                 }
+                 GlobalScope.launch {
+                     delay(5000)
+                     finish()
+                 }
+             }
         }
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
     }
     kotlinOptions {
         jvmTarget = '11'
