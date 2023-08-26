@@ -79,18 +79,14 @@ fun BudgetListContent(
                 }
                 is ResultRequest.Error -> {
                     Timber.e(result.exception)
-                    showErrorStub(result.exception)
-                    hideLoadingState()
-                }
-                is ResultRequest.Loading -> { }
-            }
-        }
-
-        viewModel.budgetDetailFlow.asLiveData().observe(viewLifecycleOwner) {
-            navigateToBudgetDetails(it)
-        }
-    }
-
+                    @Composable
+                    fun SplashAuthScreen() {
+                        Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+                            Button(onClick = { }) {
+                                Text(text = "You are loh")
+                            }
+                        }
+                    }
     private fun showErrorStub(throwable: Throwable) {
         with (binding) {
             vStub.isVisible = true
