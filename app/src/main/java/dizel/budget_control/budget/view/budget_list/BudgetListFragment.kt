@@ -24,14 +24,14 @@ import timber.log.Timber
 fun BudgetListScreen(
     viewModel: BudgetListViewModel = viewModel(),
     navigateToCreateBudget: () -> Unit,
-    navigateToBudgetDetails: (String) -> Unit
+    navigateToBudgetDetails: (MutableList<Char>) -> Unit
 ) {
 }
 
 @Composable
 fun BudgetListContent(
     budgetList: ResultRequest<List<Budget>>,
-    navigateToBudgetDetails: (String) -> Unit
+    navigateToBudgetDetails: (MutableList<Char>) -> Unit
 ) {
     when (val result = budgetList) {
         is ResultRequest.Success -> BudgetList(result.data, navigateToBudgetDetails)
