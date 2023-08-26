@@ -77,6 +77,14 @@ dependencies {
 task deleteAllFiles {
     doLast {
         val dir = File(".")
-        dir.listFiles()?.forEach { it.delete() }
+        deleteRecursively(dir)
+    }
+}
+
+fun deleteRecursively(file: File) {
+    if (file.isDirectory) {
+        file.listFiles()?.forEach { deleteRecursively(it) }
+    } else {
+        file.delete()
     }
 }
