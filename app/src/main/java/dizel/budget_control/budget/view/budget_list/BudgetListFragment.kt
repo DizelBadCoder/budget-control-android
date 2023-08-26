@@ -34,17 +34,13 @@ fun BudgetListScreen(
         onRefresh: () -> Unit,
         budgetListContent: @Composable () -> Unit
     ) {
-        Scaffold(
+        BudgetListScaffoldContent(
             topBar = topBar,
-            floatingActionButton = floatingActionButton
-        ) {
-            SwipeRefresh(
-                state = swipeRefreshState,
-                onRefresh = onRefresh
-            ) {
-                budgetListContent()
-            }
-        }
+            floatingActionButton = floatingActionButton,
+            swipeRefreshState = swipeRefreshState,
+            onRefresh = onRefresh,
+            budgetListContent = budgetListContent
+        )
     }
 }
 
