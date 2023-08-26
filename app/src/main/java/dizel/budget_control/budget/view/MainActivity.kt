@@ -6,15 +6,14 @@ import dizel.budget_control.R
 import dizel.budget_control.budget.view.budget_list.BudgetListFragment
 import dizel.budget_control.core.utils.replaceFragment
 
-class MainActivity : AppCompatActivity(R.layout.activity_main) {
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setUpFragmentContainer()
-    }
-
-    private fun setUpFragmentContainer() {
-        val fragment = BudgetListFragment()
-        replaceFragment(fragment)
-    }
-}
+        setContent {
+            BudgetControlTheme {
+                // A surface container using the 'background' color from the theme
+                Surface(color = MaterialTheme.colors.background) {
+                    BudgetListScreen()
+                }
+            // Navigation logic is now handled in the Composable function BudgetListScreen
