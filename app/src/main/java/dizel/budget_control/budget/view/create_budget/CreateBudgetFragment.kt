@@ -26,14 +26,7 @@ fun CreateBudgetScreen(viewModel: CreateBudgetViewModel = viewModel()) {
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            TopAppBar(
-                title = { Text(text = stringResource(id = R.string.create_budget)) },
-                navigationIcon = {
-                    IconButton(onClick = { findNavController().popBackStack() }) {
-                        Icon(Icons.Filled.ArrowBack, contentDescription = null)
-                    }
-                }
-            )
+            CreateBudgetTopBar()
         }
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
