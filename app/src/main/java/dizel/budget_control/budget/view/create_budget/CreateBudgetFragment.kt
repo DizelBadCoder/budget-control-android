@@ -20,7 +20,7 @@ fun CreateBudgetScreen(viewModel: CreateBudgetViewModel = viewModel()) {
     val context = LocalContext.current
     val currencyItems = Currency.values().map { "${it.name} - ${it.symbol}" }
     var selectedCurrency by remember { mutableStateOf(currencyItems.first()) }
-    var title by remember { mutableStateOf("") }
+    var title by rememberTitleState()
     var money by remember { mutableStateOf("") }
 
     CreateBudgetScaffold(
