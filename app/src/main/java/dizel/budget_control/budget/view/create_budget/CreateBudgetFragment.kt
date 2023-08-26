@@ -104,13 +104,18 @@ fun ErrorDialog(message: String, openDialog: MutableState<Boolean>) {
 
 @Composable
 fun DisplayErrorDialog(message: String, openDialog: MutableState<Boolean>) {
+    CreateAlertDialog(message, openDialog, stringResource(id = R.string.error_stub_title), stringResource(id = R.string.ok))
+}
+
+@Composable
+fun CreateAlertDialog(message: String, openDialog: MutableState<Boolean>, title: String, buttonText: String) {
     AlertDialog(
         onDismissRequest = { openDialog.value = false },
-        title = { Text(text = stringResource(id = R.string.error_stub_title)) },
+        title = { Text(text = title) },
         text = { Text(text = message) },
         confirmButton = {
             BudgetButton(onClick = { openDialog.value = false }) {
-                Text(text = stringResource(id = R.string.ok))
+                Text(text = buttonText)
             }
         }
     )
