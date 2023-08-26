@@ -8,6 +8,6 @@ Button(onClick = { navController.navigate("signIn") }) {
     Text(text = "Sign In")
 }
 
-Button(onClick = { navController.navigate("signUp") }) {
+Button(onClick = { navController.navigate("signDown") }) {
     Text(text = "Sign Up")
 }
