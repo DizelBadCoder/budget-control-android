@@ -26,6 +26,19 @@ fun BudgetListScreen(
     navigateToCreateBudget: () -> Unit,
     navigateToBudgetDetails: (String) -> Unit
 ) {
+}
+
+@Composable
+fun BudgetListContent(
+    budgetList: ResultRequest<List<Budget>>,
+    navigateToBudgetDetails: (String) -> Unit
+) {
+    when (val result = budgetList) {
+        is ResultRequest.Success -> BudgetList(result.data, navigateToBudgetDetails)
+        is ResultRequest.Error -> ErrorStub(result.exception)
+        is ResultRequest.Loading -> LoadingState()
+    }
+}
     val budgetList by viewModel.budgetList.collectAsState(initial = ResultRequest.Loading)
 
     Scaffold(
@@ -36,11 +49,7 @@ fun BudgetListScreen(
             state = rememberSwipeRefreshState(isRefreshing = budgetList is ResultRequest.Loading),
             onRefresh = viewModel::loadBudgetList
         ) {
-            when (val result = budgetList) {
-                is ResultRequest.Success -> BudgetList(result.data, navigateToBudgetDetails)
-                is ResultRequest.Error -> ErrorStub(result.exception)
-                is ResultRequest.Loading -> LoadingState()
-            }
+            BudgetListContent(budgetList, navigateToBudgetDetails)
         }
     }
 }
